@@ -214,9 +214,128 @@ export default {
     <div v-if="view === 'about'">
         <!-- Replace this with your actual about the project content: can be done here or by making a new component -->
         <div class="grid-container">
-            <div class="grid-x grid-padding-x">
+            <div class="grid-x grid-padding-x align-justify align-center">
                 <h1 class="cell auto">About the Project</h1>
             </div>
+            <hr>
+            <div class="grid-x grid-padding-x align-center">
+                <h2 class="cell auto">The Creators</h2>
+            </div>
+            <hr width = "60%">
+            <div class="grid-x grid-padding-x">
+                <h3 class="cell auto"> Tim Larson</h3>
+                <img src="images/tim_pic.jpg" alt="A picture of Tim with a mall Santa, age 1" class="cell auto">
+                <p class="cell auto">
+                    Tim is from North St Paul, Minnesota. His hobbies include video games, cars, and the outdoors. A fun fact about Tim is that he has 
+                    had Christmas photos taken with the same mall Santa for the last 21 years. Unfortunately, Santa Sid retired after last year, and thus 
+                    the greatest saga of a generation has concluded.
+                </p>
+            </div>
+            <div class="grid-x grid-padding-x">
+                <h3 class="cell auto"> Mitch Covey</h3>
+                <img src="images/mitch_pic.jpg" alt="A picture of Mitch" class="cell auto">
+                <p class="cell auto">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
+                    in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt 
+                    in culpa qui officia deserunt mollit anim id est laborum. 
+                </p>
+            </div>
+            <div class="grid-x grid-padding-x">
+                <h3 class="cell auto"> Mike Twohy</h3>
+                <img src="images/mike_pic.jpg" alt="A picture of Mike" class="cell auto">
+                <p class="cell auto">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
+                    in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt 
+                    in culpa qui officia deserunt mollit anim id est laborum. 
+                </p>
+            </div>
+            <hr>
+            <div class="grid-x grid-padding-x align-center">
+                <h2 class="cell auto">Frameworks and APIs Used </h2>
+            </div>
+            <hr width = "60%">
+            <div class="grid-x grid-padding-x">
+                <h3 class="cell auto">St. Paul Police Data API </h3>
+                <img src="images/st_paul_logo.png" alt="The St Paul City logo" class="cell auto">
+                <p class="cell auto">
+                    This API was created by Tim, Mitch, and Mike to access information from the St. Paul Crime database. The API includes
+                    routes to get codes, neighborhoods, and incidents with various options for data filtration, like codes by number or incidents by neighborhood.
+                    Additionally, the API allows for users to create or delete incidents as needed.
+                </p>
+            </div>
+            <div class="grid-x grid-padding-x">
+                <h3 class="cell auto">Foundation CSS Framework</h3>
+                <img src="images/foundation_logo.png" alt="The Foundation CSS logo" class="cell auto">
+                <p class="cell auto">
+                    A Framework for any device, medium, and accessibility. Foundation is a family of responsive front-end frameworks that make it easy to 
+                    design beautiful responsive websites, apps and emails that look amazing on any device. Foundation is semantic, readable, flexible, 
+                    and completely customizable. We are constantly adding new resources and code snippets, including these handy HTML templates to help 
+                    get you started!
+                </p>
+            </div>
+            <div class="grid-x grid-padding-x">
+                <h3 class="cell auto">Vue.js</h3>
+                <img src="images/vue_logo.png" alt="The Vue.js logo" class="cell auto">
+                <p class="cell auto">
+                    Vue is a JavaScript framework for building user interfaces. It builds on top of standard HTML, 
+                    CSS, and JavaScript and provides a declarative and component-based programming model that helps you efficiently develop user 
+                    interfaces, be they simple or complex.
+                </p>
+            </div>
+            <hr>
+            <div class="grid-x grid-padding-x align-center">
+                <h2 class="cell auto">Interesting Findings</h2>
+            </div>
+            <hr width = "60%">
+            <div class="grid-x grid-padding-x">
+                <h4 class="cell auto"> Finding One: Clever Name</h4>
+                <p class="cell auto">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+                <h4 class="cell auto"> Finding Two: Clever Name</h4>
+                <p class="cell auto">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+                <h4 class="cell auto"> Finding Three: Clever Name</h4>
+                <p class="cell auto">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                </p>
+            </div>
+            <div class="grid-x grid-padding-x">
+                <h4 class="cell auto"> Finding Four: Clever Name</h4>
+                <p class="cell auto">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                </p>
+                <h4 class="cell auto"> Finding Five: Clever Name</h4>
+                <p class="cell auto">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+                <h4 class="cell auto"> Finding Six: Clever Name</h4>
+                <p class="cell auto">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+            </div>
+            <hr>
+            <div class="grid-x grid-padding-x align-center">
+                <h2 class="cell auto">Video Demo </h2>
+            </div>
+            <hr width = "60%">
+            <div class="grid-x grid-padding-x">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                
+            </div>
+            <br>
+            <br>
+            <br>
         </div>
     </div>
 </template>
