@@ -41,9 +41,14 @@ export default {
                 ]
             },
             //Submission form info
-            name: "",
-            email: "",
-            gender: "",
+            case_number,
+            date,
+            time,
+            code,
+            incident,
+            police_grid,
+            neighborhood,
+            block,
             formSubmitted: false
         };
     },
@@ -146,19 +151,13 @@ export default {
                     v-model="case_number"
                     type="number"
                     placeholder="Enter the case number" 
-                /><br>
+                />
                 <span>Date</span><br>
                 <input 
                     v-model="date"
                     type="date"
                     placeholder="Enter the date of incident" 
                 /><br>
-                <span>Time</span><br>
-                <input 
-                    v-model="time"
-                    type="time"
-                    placeholder="Enter the time of incident"
-                />
                 <span>Time</span><br>
                 <input 
                     v-model="time"
@@ -175,27 +174,27 @@ export default {
                 <input 
                     v-model="incident"
                     type="text"
-                    placeholder="Enter a description of the incident"
+                    placeholder="Enter Incident Description"
                 />
                 <span>Police Grid</span><br>
                 <input 
                     v-model="police_grid"
                     type="number"
-                    placeholder="Enter the police grid the incident took part in"
+                    placeholder="Enter the Police Grid"
                 />
                 <span>Neighborhood</span><br>
                 <input 
                     v-model="neighborhood"
                     type="text"
-                    placeholder="Enter the neighborhood of the incident"
+                    placeholder="Enter the Neighborhood"
                 />
-                </form>
                 <span>Block</span><br>
                 <input 
                     v-model="block"
                     type="text"
-                    placeholder="Enter the block where the incident took place"
+                    placeholder="Enter the Block"
                 />
+                </form>
                 <div v-if="formSubmitted">
                     <h3>Form Submitted</h3>
                     <p>Case Number: {{ case_number }}</p>
