@@ -41,14 +41,14 @@ export default {
                 ]
             },
             //Submission form info
-            case_number,
-            date,
-            time,
-            code,
-            incident,
-            police_grid,
-            neighborhood,
-            block,
+            case_number: "",
+            date: "",
+            time: "",
+            code: "",
+            incident: "",
+            police_grid: "",
+            neighborhood: "",
+            block: "",
             formSubmitted: false
         };
     },
@@ -144,7 +144,7 @@ export default {
     <div v-if="view === 'new_incident'">
         <!-- Replace this with your actual form: can be done here or by making a new component -->
         <div class="grid-container">
-            <div class="grid-x grid-padding-x">
+            <div class="grid-x grid-padding-x align-center">
                 <form @submit.prevent="submitForm" v-if="!formSubmitted">
                 <span>Case Number</span><br>
                 <input 
