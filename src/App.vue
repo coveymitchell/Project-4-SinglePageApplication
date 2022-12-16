@@ -39,7 +39,12 @@ export default {
                     {location: [44.937705, -93.136997], marker: null},
                     {location: [44.949203, -93.093739], marker: null}
                 ]
-            }
+            },
+            //Submission form info
+            name: "",
+            email: "",
+            gender: "",
+            formSubmitted: false
         };
     },
     methods: {
@@ -53,6 +58,10 @@ export default {
 
         viewAbout(event) {
             this.view = 'about';
+        },
+
+        submitForm() {
+        this.formSubmitted = true
         },
 
         getJSON(url) {
@@ -131,7 +140,74 @@ export default {
         <!-- Replace this with your actual form: can be done here or by making a new component -->
         <div class="grid-container">
             <div class="grid-x grid-padding-x">
-                <h1 class="cell auto">New Incident Form</h1>
+                <form @submit.prevent="submitForm" v-if="!formSubmitted">
+                <span>Case Number</span><br>
+                <input 
+                    v-model="case_number"
+                    type="number"
+                    placeholder="Enter the case number" 
+                /><br>
+                <span>Date</span><br>
+                <input 
+                    v-model="date"
+                    type="date"
+                    placeholder="Enter the date of incident" 
+                /><br>
+                <span>Time</span><br>
+                <input 
+                    v-model="time"
+                    type="time"
+                    placeholder="Enter the time of incident"
+                />
+                <span>Time</span><br>
+                <input 
+                    v-model="time"
+                    type="time"
+                    placeholder="Enter the time of incident"
+                />
+                <span>Code</span><br>
+                <input 
+                    v-model="code"
+                    type="number"
+                    placeholder="Enter the incident code"
+                />
+                <span>Incident</span><br>
+                <input 
+                    v-model="incident"
+                    type="text"
+                    placeholder="Enter a description of the incident"
+                />
+                <span>Police Grid</span><br>
+                <input 
+                    v-model="police_grid"
+                    type="number"
+                    placeholder="Enter the police grid the incident took part in"
+                />
+                <span>Neighborhood</span><br>
+                <input 
+                    v-model="neighborhood"
+                    type="text"
+                    placeholder="Enter the neighborhood of the incident"
+                />
+                </form>
+                <span>Block</span><br>
+                <input 
+                    v-model="block"
+                    type="text"
+                    placeholder="Enter the block where the incident took place"
+                />
+                <div v-if="formSubmitted">
+                    <h3>Form Submitted</h3>
+                    <p>Case Number: {{ case_number }}</p>
+                    <p>Date: {{ date }}</p>
+                    <p>Time: {{ time }}</p>
+                    <p>Code: {{ code }}</p>
+                    <p>Incident: {{ incident }}</p>
+                    <p>Police Grid: {{ police_grid }}</p>
+                    <p>Neighborhood: {{ neighborhood }}</p>
+                    <p>Block: {{ block }}</p>
+                    <small>Form submittted.</small>
+                </div>
             </div>
         </div>
     </div>
