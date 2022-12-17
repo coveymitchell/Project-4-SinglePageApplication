@@ -120,18 +120,14 @@ export default {
             console.log(this.search);
         },
         onClickGo(search) {
-            let zoom = this.leaflet.map.getMaxZoom()
-            let bounds = this.leaflet.bounds
-
             if (isCoordinate(search)) {
-                let coord = clamp(parseCoordinates(search), bounds)
-                this.leaflet.map.flyTo(coord, zoom)   
+                this.flyTo(parseCoordinates(search))
                 return
             }
             if (isAddress(search)) {
                 getCoordinatesFromAddress(search)
                 .then((coord) => {
-                    this.leaflet.map.flyTo(clamp(coord, bounds), zoom)  
+                    this.flyTo(coord)
                 })
                 .catch((err) => {
                     alert(`${search} not a valid address`)
@@ -141,8 +137,19 @@ export default {
             }
             alert(`invalid search: ${search}`)
         },
+        flyTo(coordinate) {
+            let zoom = this.leaflet.map.getMaxZoom()
+            let bounds = this.leaflet.bounds
+            let clampedCoord = clamp(coordinate, bounds)
+            this.leaflet.map.flyTo(clampedCoord, zoom)
+        },
         onDeleteIncident(incident) {
+            // todo delete
             this.showIncidentPopup = false
+        },
+        onSelectIncident(incident) {
+            // todo show marker on map
+            this.showIncidentPopup = true
         }
     },
     mounted() {
@@ -174,6 +181,7 @@ export default {
 </script>
 
 <template>
+    <!-- Popup Container -->
     <div 
         class="popup-container" 
         v-if="showIncidentPopup" 
@@ -188,6 +196,7 @@ export default {
         />
     </div>
     
+    <!-- Top Bar -->
     <div class="grid-container">
         <div class="grid-x grid-padding-x">
             <p :class="'cell small-4 ' + ((view === 'map') ? 'selected' : 'unselected')" @click="viewMap">Map</p>
@@ -195,7 +204,9 @@ export default {
             <p :class="'cell small-4 ' + ((view === 'about') ? 'selected' : 'unselected')" @click="viewAbout">About</p>
         </div>
     </div>
-    <div v-show="view === 'map'">
+
+    <!-- Map Page -->
+    <div v-show="view === 'map'" @keyup.enter="onClickGo(this.search)">
         <div class="grid-container">
             <div class="grid-y grid-padding-y">
                 <div id="leafletmap" class="cell"></div>
