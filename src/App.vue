@@ -76,7 +76,7 @@ export default {
         },
 
         submitForm() {
-        this.formSubmitted = true
+            this.formSubmitted = true
         },
 
         getJSON(url) {
@@ -217,6 +217,36 @@ export default {
             class="button" 
             @click="this.showIncidentPopup = true"
         >(TEMP) Show Incident Popup</button>
+    </div>
+    <div class="grid-container">
+        <div class="grid-x grid-padding-x">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Case Number</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Code</th>
+                        <th>Incident</th>
+                        <th>Police Grid</th>
+                        <th>Neighborhood</th>
+                        <th>Block</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="incident in incidents">
+                        <td>{{ incident.case_number }}</td>
+                        <td>{{ incident.date }}</td>
+                        <td>{{ incident.time }}</td>
+                        <td>{{ incident.code }}</td>
+                        <td>{{ incident.incident }}</td>
+                        <td>{{ incident.police_grid }}</td>
+                        <td>{{ incident.neighborhood }}</td>
+                        <td>{{ incident.block }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <div v-if="view === 'new_incident'">
         <!-- Replace this with your actual form: can be done here or by making a new component -->
