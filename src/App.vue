@@ -101,11 +101,10 @@ export default {
                 });
             });
         },
-        onMapZoom() {
-
-        },
-        onMapMove() {
-
+        onMapMoveOrZoom(lat, lng) {
+            this.search = `${lat}, ${lng}`
+            this.leaflet.center.lat = lat
+            this.leaflet.center.lng = lng
         },
         onSearchChange(search) {
             this.search = search
@@ -131,6 +130,11 @@ export default {
         }).catch((error) => {
             console.log("Error:", error);
         });
+
+        this.leaflet.map.on('moveend', () => {
+            let latLng = this.leaflet.map.getCenter()
+            this.onMapMoveOrZoom(latLng.lat, latLng.lng)
+        })
     },
     components: { SearchBar }
 }

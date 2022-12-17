@@ -13,6 +13,9 @@ export default {
         :value="search"
         @input="$emit('update:search', $event.target.value)"
       />
-      <button class="cell auto button" @click="$emit('click:go', this.search)">Go</button>
+      <button 
+        class="cell auto button" 
+        @click="$emit('click:go', this.search)"
+      >Go</button>
     </div>
 </template>
