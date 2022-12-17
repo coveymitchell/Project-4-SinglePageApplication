@@ -51,7 +51,7 @@ export default {
                 ]
             },
             search: "",
-            showIncidentPopup: true,
+            showIncidentPopup: false,
             //Submission form info
             case_number: "",
             date: "",
@@ -206,6 +206,10 @@ export default {
                 />
             </div>
         </div>
+        <button 
+            class="button" 
+            @click="this.showIncidentPopup = true"
+        >(TEMP) Show Incident Popup</button>
     </div>
     <div v-if="view === 'new_incident'">
         <!-- Replace this with your actual form: can be done here or by making a new component -->
