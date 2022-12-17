@@ -1,7 +1,7 @@
 <script>
 import $ from 'jquery'
 import SearchBar from './components/SearchBar.vue';
-import { isAddress, isCoordinate, parseCoordinates, isInBounds } from './map-page.js'
+import { isAddress, isCoordinate, parseCoordinates, clamp } from './map-page.js'
 
 export default {
     data() {
@@ -112,17 +112,13 @@ export default {
         },
         onClickGo(search) {
             if (isCoordinate(search)) {
-                let coordinates = parseCoordinates(search)
-                if (!isInBounds(coordinates, this.leaflet.bounds)) {
-                    alert("Coordinates are out of bounds")
-                    return   
-                }
+                let coordinates = clamp(parseCoordinates(search), this.leaflet.bounds)
                 this.leaflet.map.flyTo(coordinates, this.leaflet.map.getMaxZoom())
                 return
             }
             if (isAddress(search)) {
                 console.log("address: ", search)
-                return 
+                return
             }
             console.log("invalid search: ", search)
         }
