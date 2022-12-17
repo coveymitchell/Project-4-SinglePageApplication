@@ -1,6 +1,7 @@
 <script>
 import $ from 'jquery'
 import SearchBar from './components/SearchBar.vue';
+import { onClickGo } from './map-page.js'
 
 export default {
     data() {
@@ -41,6 +42,7 @@ export default {
                     { location: [44.949203, -93.093739], marker: null }
                 ]
             },
+            search: "",
             //Submission form info
             case_number: "",
             date: "",
@@ -99,17 +101,17 @@ export default {
                 });
             });
         },
-        onClickGo(inputText) {
-            function isCoordinate(text) {
-                return true // todo do regex
-            }
+        onMapZoom() {
 
-            if (isCoordinate(inputText)) {
-                let [x, y] = inputText.split(',').map(parseFloat)
-                console.log(x, y);
-            }
-            console.log("Go!", inputText);
-        }   
+        },
+        onMapMove() {
+
+        },
+        onSearchChange(search) {
+            this.search = search
+            console.log(this.search);
+        },
+        onClickGo // imported from map-page.js
     },
     mounted() {
         this.leaflet.map = L.map("leafletmap").setView([this.leaflet.center.lat, this.leaflet.center.lng], this.leaflet.zoom);
@@ -146,7 +148,11 @@ export default {
         <div class="grid-container">
             <div class="grid-y grid-padding-y">
                 <div id="leafletmap" class="cell"></div>
-                <SearchBar class="cell" :on-click-go="onClickGo" />
+                <SearchBar 
+                    class="cell"
+                    v-model:search="search"
+                    @click:go="onClickGo"
+                />
             </div>
         </div>
     </div>

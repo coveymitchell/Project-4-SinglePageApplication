@@ -1,20 +1,18 @@
 <script>
 export default {
-    props: ['onClickGo'],
-    data() {
-        return { inputText: '' }   
-    },
-    methods: {
-        handleGoButton() {
-            this.onClickGo(this.inputText)
-        }
-    }
+    props: ['search'],
+    emits: ['update:search', `click:go`]
 }   
 </script>
 
 <template>
     <div class="grid-x grid-padding-x" style="height:min-content">
-      <input class="cell small-8" type="text" v-model="inputText" />
-      <button class="cell auto button" @click="handleGoButton">Go</button>
+      <input 
+        class="cell small-8" 
+        type="text" 
+        :value="search"
+        @input="$emit('update:search', $event.target.value)"
+      />
+      <button class="cell auto button" @click="$emit('click:go', this.search)">Go</button>
     </div>
 </template>
