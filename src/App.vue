@@ -144,9 +144,9 @@ export default {
     </div>
     <div v-show="view === 'map'">
         <div class="grid-container">
-            <div class="grid-x grid-padding-x">
-                <div id="leafletmap" class="cell auto"></div>
-                <SearchBar :on-click-go="onClickGo" />
+            <div class="grid-y grid-padding-y">
+                <div id="leafletmap" class="cell"></div>
+                <SearchBar class="cell" :on-click-go="onClickGo" />
             </div>
         </div>
     </div>
