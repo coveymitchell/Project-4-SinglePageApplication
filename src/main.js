@@ -1,6 +1,5 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import { onClickGo } from './map-page';
 
 let init = false;
 
