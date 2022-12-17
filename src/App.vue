@@ -110,14 +110,16 @@ export default {
                 });
             });
         },
+        flyTo(coordinate) {
+            let zoom = this.leaflet.map.getMaxZoom()
+            let bounds = this.leaflet.bounds
+            let clampedCoord = clamp(coordinate, bounds)
+            this.leaflet.map.flyTo(clampedCoord, zoom)
+        },
         onMapMoveOrZoom(lat, lng) {
             this.search = `${lat}, ${lng}`
             this.leaflet.center.lat = lat
             this.leaflet.center.lng = lng
-        },
-        onSearchChange(search) {
-            this.search = search
-            console.log(this.search);
         },
         onClickGo(search) {
             if (isCoordinate(search)) {
@@ -137,14 +139,8 @@ export default {
             }
             alert(`invalid search: ${search}`)
         },
-        flyTo(coordinate) {
-            let zoom = this.leaflet.map.getMaxZoom()
-            let bounds = this.leaflet.bounds
-            let clampedCoord = clamp(coordinate, bounds)
-            this.leaflet.map.flyTo(clampedCoord, zoom)
-        },
         onDeleteIncident(incident) {
-            // todo delete
+            // todo delete incident
             this.showIncidentPopup = false
         },
         onSelectIncident(incident) {

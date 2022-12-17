@@ -36,12 +36,15 @@ export function isInBounds(coord, bounds) {
 }
 
 export function getCoordinatesFromAddress(address) {
-    let url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json`
     return new Promise((resolve, reject) => {
-        fetch(url)
+        fetch(createNominatimUrl(address))
         .then(response => response.json())
         .then(data => {
             resolve({ lat: data[0].lat, lng: data[0].lon })
         }); 
     }) 
+}
+
+function createNominatimUrl(q, format="json") {
+    return `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=${format}`
 }
