@@ -1,10 +1,11 @@
 <script>
 import $ from 'jquery'
+import SearchBar from './components/SearchBar.vue';
 
 export default {
     data() {
         return {
-            view: 'map',
+            view: "map",
             codes: [],
             neighborhoods: [],
             incidents: [],
@@ -17,27 +18,27 @@ export default {
                 },
                 zoom: 12,
                 bounds: {
-                    nw: {lat: 45.008206, lng: -93.217977},
-                    se: {lat: 44.883658, lng: -92.993787}
+                    nw: { lat: 45.008206, lng: -93.217977 },
+                    se: { lat: 44.883658, lng: -92.993787 }
                 },
                 neighborhood_markers: [
-                    {location: [44.942068, -93.020521], marker: null},
-                    {location: [44.977413, -93.025156], marker: null},
-                    {location: [44.931244, -93.079578], marker: null},
-                    {location: [44.956192, -93.060189], marker: null},
-                    {location: [44.978883, -93.068163], marker: null},
-                    {location: [44.975766, -93.113887], marker: null},
-                    {location: [44.959639, -93.121271], marker: null},
-                    {location: [44.947700, -93.128505], marker: null},
-                    {location: [44.930276, -93.119911], marker: null},
-                    {location: [44.982752, -93.147910], marker: null},
-                    {location: [44.963631, -93.167548], marker: null},
-                    {location: [44.973971, -93.197965], marker: null},
-                    {location: [44.949043, -93.178261], marker: null},
-                    {location: [44.934848, -93.176736], marker: null},
-                    {location: [44.913106, -93.170779], marker: null},
-                    {location: [44.937705, -93.136997], marker: null},
-                    {location: [44.949203, -93.093739], marker: null}
+                    { location: [44.942068, -93.020521], marker: null },
+                    { location: [44.977413, -93.025156], marker: null },
+                    { location: [44.931244, -93.079578], marker: null },
+                    { location: [44.956192, -93.060189], marker: null },
+                    { location: [44.978883, -93.068163], marker: null },
+                    { location: [44.975766, -93.113887], marker: null },
+                    { location: [44.959639, -93.121271], marker: null },
+                    { location: [44.9477, -93.128505], marker: null },
+                    { location: [44.930276, -93.119911], marker: null },
+                    { location: [44.982752, -93.14791], marker: null },
+                    { location: [44.963631, -93.167548], marker: null },
+                    { location: [44.973971, -93.197965], marker: null },
+                    { location: [44.949043, -93.178261], marker: null },
+                    { location: [44.934848, -93.176736], marker: null },
+                    { location: [44.913106, -93.170779], marker: null },
+                    { location: [44.937705, -93.136997], marker: null },
+                    { location: [44.949203, -93.093739], marker: null }
                 ]
             },
             //Submission form info
@@ -54,15 +55,13 @@ export default {
     },
     methods: {
         viewMap(event) {
-            this.view = 'map';
+            this.view = "map";
         },
-
         viewNewIncident(event) {
-            this.view = 'new_incident';
+            this.view = "new_incident";
         },
-
         viewAbout(event) {
-            this.view = 'about';
+            this.view = "about";
         },
 
         submitForm() {
@@ -72,57 +71,66 @@ export default {
         getJSON(url) {
             return new Promise((resolve, reject) => {
                 $.ajax({
-                    dataType: 'json',
+                    dataType: "json",
                     url: url,
                     success: (response) => {
                         resolve(response);
                     },
                     error: (status, message) => {
-                        reject({status: status.status, message: status.statusText});
+                        reject({ status: status.status, message: status.statusText });
                     }
                 });
             });
         },
-
         uploadJSON(method, url, data) {
             return new Promise((resolve, reject) => {
                 $.ajax({
                     type: method,
                     url: url,
-                    contentType: 'application/json; charset=utf-8',
+                    contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(data),
-                    dataType: 'text',
+                    dataType: "text",
                     success: (response) => {
                         resolve(response);
                     },
                     error: (status, message) => {
-                        reject({status: status.status, message: status.statusText});
+                        reject({ status: status.status, message: status.statusText });
                     }
                 });
             });
-        }
+        },
+        onClickGo(inputText) {
+            function isCoordinate(text) {
+                return true // todo do regex
+            }
+
+            if (isCoordinate(inputText)) {
+                let [x, y] = inputText.split(',').map(parseFloat)
+                console.log(x, y);
+            }
+            console.log("Go!", inputText);
+        }   
     },
     mounted() {
-        this.leaflet.map = L.map('leafletmap').setView([this.leaflet.center.lat, this.leaflet.center.lng], this.leaflet.zoom);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        this.leaflet.map = L.map("leafletmap").setView([this.leaflet.center.lat, this.leaflet.center.lng], this.leaflet.zoom);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
             minZoom: 11,
             maxZoom: 18
         }).addTo(this.leaflet.map);
         this.leaflet.map.setMaxBounds([[44.883658, -93.217977], [45.008206, -92.993787]]);
-
         let district_boundary = new L.geoJson();
         district_boundary.addTo(this.leaflet.map);
-
-        this.getJSON('/data/StPaulDistrictCouncil.geojson').then((result) => {
+        this.getJSON("/data/StPaulDistrictCouncil.geojson").then((result) => {
             // St. Paul GeoJSON
             $(result.features).each((key, value) => {
                 district_boundary.addData(value);
             });
         }).catch((error) => {
-            console.log('Error:', error);
+            console.log("Error:", error);
         });
-    }
+    },
+    components: { SearchBar }
 }
 </script>
 
@@ -138,6 +146,7 @@ export default {
         <div class="grid-container">
             <div class="grid-x grid-padding-x">
                 <div id="leafletmap" class="cell auto"></div>
+                <SearchBar :on-click-go="onClickGo" />
             </div>
         </div>
     </div>
