@@ -195,9 +195,9 @@ export default {
     <!-- Top Bar -->
     <div class="grid-container">
         <div class="grid-x grid-padding-x">
-            <p :class="'cell small-4 ' + ((view === 'map') ? 'selected' : 'unselected')" @click="viewMap">Map</p>
-            <p :class="'cell small-4 ' + ((view === 'new_incident') ? 'selected' : 'unselected')" @click="viewNewIncident">New Incident</p>
-            <p :class="'cell small-4 ' + ((view === 'about') ? 'selected' : 'unselected')" @click="viewAbout">About</p>
+            <p :class="'cell small-4' + ((view === 'map') ? 'selected' : 'unselected')" @click="viewMap">Map</p>
+            <p :class="'cell small-4' + ((view === 'new_incident') ? 'selected' : 'unselected')" @click="viewNewIncident">New Incident</p>
+            <p :class="'cell small-4' + ((view === 'about') ? 'selected' : 'unselected')" @click="viewAbout">About</p>
         </div>
     </div>
 
@@ -213,39 +213,97 @@ export default {
                 />
             </div>
         </div>
-        <button 
-            class="button" 
-            @click="this.showIncidentPopup = true"
-        >(TEMP) Show Incident Popup</button>
-    </div>
-    <div class="grid-container">
-        <div class="grid-x grid-padding-x">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Case Number</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Code</th>
-                        <th>Incident</th>
-                        <th>Police Grid</th>
-                        <th>Neighborhood</th>
-                        <th>Block</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="incident in incidents">
-                        <td>{{ incident.case_number }}</td>
-                        <td>{{ incident.date }}</td>
-                        <td>{{ incident.time }}</td>
-                        <td>{{ incident.code }}</td>
-                        <td>{{ incident.incident }}</td>
-                        <td>{{ incident.police_grid }}</td>
-                        <td>{{ incident.neighborhood }}</td>
-                        <td>{{ incident.block }}</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="grid-container">
+            <div class="grid-x grid-padding-x">
+                <button  
+                    class="button cell small-4" 
+                    @click="this.showIncidentPopup = true"
+                >(TEMP) Show Incident Popup</button>
+                <table class="cell small-8">
+                    <thead>
+                        <tr>
+                            <th> Crime Type</th>
+                            <th> Color </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="violent">
+                            <td> Violent</td>
+                            <td> Red </td>
+                        </tr>
+                        <tr id="property">
+                            <td> Property</td>
+                            <td> Green</td>
+                        </tr>
+                        <tr id="other">
+                            <td>Other</td>
+                            <td> Blue</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div> 
+        
+        <!--Table-->
+        <div class="grid-container">
+            <div class="grid-x grid-padding-x">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Case Number</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Code</th>
+                            <th>Incident</th>
+                            <th>Police Grid</th>
+                            <th>Neighborhood</th>
+                            <th>Block</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                        </tr>
+                        <tr>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                        </tr>
+                        <tr>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                        </tr>
+                        <tr v-for="incident in incidents">
+                            <td>{{ incident.case_number }}</td>
+                            <td>{{ incident.date }}</td>
+                            <td>{{ incident.time }}</td>
+                            <td>{{ incident.code }}</td>
+                            <td>{{ incident.incident }}</td>
+                            <td>{{ incident.police_grid }}</td>
+                            <td>{{ incident.neighborhood }}</td>
+                            <td>{{ incident.block }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <div v-if="view === 'new_incident'">
@@ -329,18 +387,18 @@ export default {
             </div>
             <hr width = "60%">
             <div class="grid-x grid-padding-x">
-                <h3 class="cell auto"> Tim Larson</h3>
-                <img src="images/tim_pic.jpg" alt="A picture of Tim with a mall Santa, age 1" class="cell auto">
-                <p class="cell auto">
+                <h3 class="cell small-12 medium-3 large-3"> Tim Larson</h3>
+                <img src="images/tim_pic.jpg" alt="A picture of Tim with a mall Santa, age 1" class="cell small-12 medium-8 large-3" id="aboutImg">
+                <p class="cell small-12 medium-12 large-3" id="aboutPara">
                     Tim is from North St Paul, Minnesota. His hobbies include video games, cars, and the outdoors. A fun fact about Tim is that he has 
                     had Christmas photos taken with the same mall Santa for the last 21 years. Unfortunately, Santa Sid retired after last year, and thus 
                     the greatest saga of a generation has concluded.
                 </p>
             </div>
             <div class="grid-x grid-padding-x">
-                <h3 class="cell auto"> Mitch Covey</h3>
-                <img src="images/mitch_pic.jpg" alt="A picture of Mitch" class="cell auto">
-                <p class="cell auto">
+                <h3 class="cell small-12 medium-3 large-3"> Mitch Covey</h3>
+                <img src="images/mitch_pic.jpg" alt="A picture of Mitch" class="cell small-12 medium-8 large-3" id="aboutImg">
+                <p class="cell small-12 medium-12 large-3" id="aboutPara">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
                     in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt 
@@ -348,9 +406,9 @@ export default {
                 </p>
             </div>
             <div class="grid-x grid-padding-x">
-                <h3 class="cell auto"> Mike Twohy</h3>
-                <img src="images/mike_pic.jpg" alt="A picture of Mike" class="cell auto">
-                <p class="cell auto">
+                <h3 class="cell small-12 medium-3 large-3"> Mike Twohy</h3>
+                <img src="images/mike_pic.jpg" alt="A picture of Mike" class="cell small-12 medium-8 large-3" id="aboutImg">
+                <p class="cell small-12 medium-12 large-3" id="aboutPara">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
                     in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt 
@@ -363,18 +421,18 @@ export default {
             </div>
             <hr width = "60%">
             <div class="grid-x grid-padding-x">
-                <h3 class="cell auto">St. Paul Police Data API </h3>
-                <img src="images/st_paul_logo.png" alt="The St Paul City logo" class="cell auto">
-                <p class="cell auto">
+                <h3 class="cell small-12 medium-3 large-3">St. Paul Police Data API </h3>
+                <img src="images/st_paul_logo.png" alt="The St Paul City logo" class="cell small-12 medium-8 large-3" id="aboutImg">
+                <p class="cell small-12 medium-12 large-3" id="aboutPara">
                     This API was created by Tim, Mitch, and Mike to access information from the St. Paul Crime database. The API includes
                     routes to get codes, neighborhoods, and incidents with various options for data filtration, like codes by number or incidents by neighborhood.
                     Additionally, the API allows for users to create or delete incidents as needed.
                 </p>
             </div>
             <div class="grid-x grid-padding-x">
-                <h3 class="cell auto">Foundation CSS Framework</h3>
-                <img src="images/foundation_logo.png" alt="The Foundation CSS logo" class="cell auto">
-                <p class="cell auto">
+                <h3 class="cell small-12 medium-3 large-3">Foundation CSS Framework</h3>
+                <img src="images/foundation_logo.png" alt="The Foundation CSS logo" class="cell small-12 medium-8 large-3" id="aboutImg"> 
+                <p class="cell small-12 medium-12 large-3" id="aboutPara">
                     A Framework for any device, medium, and accessibility. Foundation is a family of responsive front-end frameworks that make it easy to 
                     design beautiful responsive websites, apps and emails that look amazing on any device. Foundation is semantic, readable, flexible, 
                     and completely customizable. We are constantly adding new resources and code snippets, including these handy HTML templates to help 
@@ -382,9 +440,9 @@ export default {
                 </p>
             </div>
             <div class="grid-x grid-padding-x">
-                <h3 class="cell auto">Vue.js</h3>
-                <img src="images/vue_logo.png" alt="The Vue.js logo" class="cell auto">
-                <p class="cell auto">
+                <h3 class="cell small-12 medium-3 large-3">Vue.js</h3>
+                <img src="images/vue_logo.png" alt="The Vue.js logo" class="cell small-12 medium-8 large-3" id="aboutImg">
+                <p class="cell small-12 medium-12 large-3" id="aboutPara">
                     Vue is a JavaScript framework for building user interfaces. It builds on top of standard HTML, 
                     CSS, and JavaScript and provides a declarative and component-based programming model that helps you efficiently develop user 
                     interfaces, be they simple or complex.
@@ -396,38 +454,48 @@ export default {
             </div>
             <hr width = "60%">
             <div class="grid-x grid-padding-x">
-                <h4 class="cell auto"> Finding One: Clever Name</h4>
-                <p class="cell auto">
+                <div class="cell small-12 medium-6 large-4">
+                    <h4> Finding Title</h4>
+                    <p id="aboutPara">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
-                <h4 class="cell auto"> Finding Two: Clever Name</h4>
-                <p class="cell auto">
+                    </p>
+                </div>
+                <div class="cell small-12 medium-6 large-4">
+                    <h4> Finding Title</h4>
+                    <p id="aboutPara">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
-                <h4 class="cell auto"> Finding Three: Clever Name</h4>
-                <p class="cell auto">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                </p>
-            </div>
-            <div class="grid-x grid-padding-x">
-                <h4 class="cell auto"> Finding Four: Clever Name</h4>
-                <p class="cell auto">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                </p>
-                <h4 class="cell auto"> Finding Five: Clever Name</h4>
-                <p class="cell auto">
+                    </p>
+                </div>
+                <div class="cell small-12 medium-6 large-4">
+                    <h4> Finding Title</h4>
+                    <p id="aboutPara">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
-                <h4 class="cell auto"> Finding Six: Clever Name</h4>
-                <p class="cell auto">
+                    </p>
+                </div>
+                <div class="cell small-12 medium-6 large-4">
+                    <h4> Finding Title</h4>
+                    <p id="aboutPara">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
+                    </p>
+                </div>
+                <div class="cell small-12 medium-6 large-4">
+                    <h4> Finding Title</h4>
+                    <p id="aboutPara">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </p>
+                </div>
+                <div class="cell small-12 medium-6 large-4">
+                    <h4> Finding Title</h4>
+                    <p id="aboutPara">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </p>
+                </div>
             </div>
             <hr>
             <div class="grid-x grid-padding-x align-center">

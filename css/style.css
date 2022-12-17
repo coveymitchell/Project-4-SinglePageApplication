@@ -7,6 +7,7 @@ html {
     font-size: 100%;
     width: 100%;
     height: 100%;
+    background: plum;
 }
 
 hr { 
@@ -14,6 +15,67 @@ hr {
     border:none; 
     color:rgb(60,90,180); 
     background-color:rgb(60,90,180); 
+}
+
+p {
+    background: rgb(169, 185, 169);
+    border-radius: 50px;
+    padding:10px;
+    border: 1px solid lightgray;
+    margin: 10px;
+}
+p:hover {
+    background: rgb(72, 136, 72);
+}
+
+h3 {
+    background: black;
+    color: ghostwhite;
+    border-radius: 50px;
+    padding:10px;
+    border: 1px solid black;
+    margin: 10px;
+}
+h3:hover {
+    background: violet;
+    color: black;
+}
+h4 {
+    background: black;
+    color: ghostwhite;
+    border-radius: 50px;
+    padding:10px;
+    border: 1px solid black;
+    margin: 10px;
+}
+h4:hover {
+    background: violet;
+    color: black;
+}
+
+#aboutImg{
+    border-radius: 50px;
+    filter: grayscale(0%);
+    max-width: fit-content;
+    height:fit-content
+}
+
+#aboutImg:hover {
+    filter: grayscale(0%);
+}
+
+div{
+    background: plum;
+}
+
+#violent {
+    background-color: rgb(245, 122, 122);
+}
+#property {
+    background-color: rgb(161, 230, 161);
+}
+#other{
+    background-color: lightblue;
 }
 
 /* Centers popup in middle of screen */
