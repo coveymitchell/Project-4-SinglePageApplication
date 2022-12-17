@@ -1,5 +1,6 @@
 <script>
 import $ from 'jquery'
+import CrimeMarkerPopup from './components/CrimeMarkerPopup.vue';
 import SearchBar from './components/SearchBar.vue';
 import { 
     isAddress, 
@@ -50,6 +51,7 @@ export default {
                 ]
             },
             search: "",
+            showIncidentPopup: true,
             //Submission form info
             case_number: "",
             date: "",
@@ -138,6 +140,9 @@ export default {
                 return
             }
             alert(`invalid search: ${search}`)
+        },
+        onDeleteIncident(incident) {
+            this.showIncidentPopup = false
         }
     },
     mounted() {
@@ -164,11 +169,25 @@ export default {
             this.onMapMoveOrZoom(latLng.lat, latLng.lng)
         })
     },
-    components: { SearchBar }
+    components: { SearchBar, CrimeMarkerPopup }
 }
 </script>
 
 <template>
+    <div 
+        class="popup-container" 
+        v-if="showIncidentPopup" 
+        @click="this.showIncidentPopup=false"
+    >
+        <CrimeMarkerPopup 
+            date="12-17-2021"
+            time="12:07pm"
+            incident="Hello World!"
+            v-if="showIncidentPopup" 
+            @click:delete="onDeleteIncident(null)"
+        />
+    </div>
+    
     <div class="grid-container">
         <div class="grid-x grid-padding-x">
             <p :class="'cell small-4 ' + ((view === 'map') ? 'selected' : 'unselected')" @click="viewMap">Map</p>
