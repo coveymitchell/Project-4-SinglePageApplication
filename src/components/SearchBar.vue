@@ -8,7 +8,7 @@ export default {
 <template>
     <div class="grid-x grid-padding-x" style="height:min-content">
       <input 
-        class="cell small-8" 
+        class="cell small-10" 
         type="text" 
         :value="search"
         @input="$emit('update:search', $event.target.value)"
