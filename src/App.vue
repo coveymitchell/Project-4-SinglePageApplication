@@ -1,7 +1,14 @@
 <script>
 import $ from 'jquery'
 import SearchBar from './components/SearchBar.vue';
-import { isAddress, isCoordinate, parseCoordinates, clamp } from './map-page.js'
+import { 
+    isAddress, 
+    isCoordinate, 
+    parseCoordinates, 
+    isInBounds,
+    clamp, 
+    getCoordinatesFromAddress,
+} from './map-page.js'
 
 export default {
     data() {
@@ -111,16 +118,26 @@ export default {
             console.log(this.search);
         },
         onClickGo(search) {
+            let zoom = this.leaflet.map.getMaxZoom()
+            let bounds = this.leaflet.bounds
+
             if (isCoordinate(search)) {
-                let coordinates = clamp(parseCoordinates(search), this.leaflet.bounds)
-                this.leaflet.map.flyTo(coordinates, this.leaflet.map.getMaxZoom())
+                let coord = clamp(parseCoordinates(search), bounds)
+                this.leaflet.map.flyTo(coord, zoom)   
                 return
             }
             if (isAddress(search)) {
-                console.log("address: ", search)
+                getCoordinatesFromAddress(search)
+                .then((coord) => {
+                    this.leaflet.map.flyTo(clamp(coord, bounds), zoom)  
+                })
+                .catch((err) => {
+                    alert(`${search} not a valid address`)
+                    console.log(err);
+                })
                 return
             }
-            console.log("invalid search: ", search)
+            alert(`invalid search: ${search}`)
         }
     },
     mounted() {
