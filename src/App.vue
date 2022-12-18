@@ -54,6 +54,7 @@ export default {
             search: "",
             showIncidentPopup: false,
             //Submission form info
+            incident_url: "",
             case_number: "",
             date: "",
             time: "",
@@ -440,6 +441,7 @@ export default {
                     type="text"
                     placeholder="Enter the Block"
                 />
+                <input type="submit" value="Submit"/>
                 </form>
                 <div v-if="formSubmitted">
                     <h3>Form Submitted</h3>
@@ -451,7 +453,6 @@ export default {
                     <p>Police Grid: {{ police_grid }}</p>
                     <p>Neighborhood: {{ neighborhood }}</p>
                     <p>Block: {{ block }}</p>
-                    <small>Form submittted.</small>
                 </div>
             </div>
         </div>
