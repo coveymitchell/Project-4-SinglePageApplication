@@ -92,7 +92,7 @@ export default {
                     ],
                     startDate: "2014-08-14",
                     endDate: "2022-11-14",
-                    limit: 100
+                    limit: 1000
                 }
             },
             
