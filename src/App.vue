@@ -218,38 +218,71 @@ export default {
                 <form @submit.prevent="submitForm" v-if="!formSubmitted"> 
                     <div class="cell small-3">
                         <span>Incident Type</span><br>
-                            <input type="checkbox" id="naroctics" name="narcotics" value="Narcotics"> <!--value may need to be changed to whatever is passed to API-->
+                            <input type="checkbox" id="naroctics" name="narcotics" value="Narcotics" checked="checked"> <!--value may need to be changed to whatever is passed to API-->
                             <label for="narcotics"> Narcotics</label><br>
-                            <input type="checkbox" id="crimeType" name="crimeType" value="crimeType">
+                            <input type="checkbox" id="crimeType" name="crimeType" value="crimeType" checked="checked">
                             <label for="narcotics"> Crime Type</label><br>
                     </div>
                     <div class="cell small-3">
                         <span>Neighborhood</span><br>
-                            <input type="checkbox" id="summithill" name="summithill" value="summithill"> <!--value may need to be changed to whatever is passed to API-->
-                            <label for="summithill"> Summit-Hill</label><br>
-                            <input type="checkbox" id="neighborhood" name="neighborhood" value="neighborhood">
-                            <label for="neighborhood"> Neighborhood</label><br>
+                            <input type="checkbox" id="su" name="su" value="su" checked="checked"> <!--value may need to be changed to whatever is passed to API-->
+                            <label for="su"> Summit-University</label><br>
+                            <input type="checkbox" id="sap" name="sap" value="sap" checked="checked">
+                            <label for="sap"> Saint Anthony Park</label><br> 
+                            <input type="checkbox" id="c" name="c" value="c" checked="checked">
+                            <label for="c"> Como Park</label><br> 
+                            <input type="checkbox" id="ne" name="ne" value="ne" checked="checked">
+                            <label for="ne"> North End</label><br> 
+                            <input type="checkbox" id="pp" name="pp" value="pp" checked="checked">
+                            <label for="pp"> Payne-Phalen</label><br> 
+                            <input type="checkbox" id="ges" name="ges" value="ges" checked="checked">
+                            <label for="ges"> Greater East Side</label><br> 
+                            <input type="checkbox" id="hm" name="hm" value="hm" checked="checked">
+                            <label for="hm"> Hameline-Midway</label><br> 
+                            <input type="checkbox" id="f" name="f" value="f" checked="checked">
+                            <label for="f"> Frogtown</label><br> 
+                            <input type="checkbox" id="db" name="db" value="db" checked="checked">
+                            <label for="db"> Dayton's Bluff</label><br> 
+                            <input type="checkbox" id="s" name="s" value="s" checked="checked">
+                            <label for="s"> Southeast</label><br> 
+                            <input type="checkbox" id="up" name="up" value="up" checked="checked">
+                            <label for="up"> Union Park</label><br> 
+                            <input type="checkbox" id="d" name="d" value="d" checked="checked">
+                            <label for="d"> Downtown</label><br> 
+                            <input type="checkbox" id="mg" name="mg" value="mg" checked="checked">
+                            <label for="mg"> Macalester-Groveland</label><br> 
+                            <input type="checkbox" id="sh" name="sh" value="sh" checked="checked">
+                            <label for="sh"> Summit Hill</label><br> 
+                            <input type="checkbox" id="wsfr" name="wsfr" value="wsfr" checked="checked">
+                            <label for="wsfr"> West Seventh-Fort Road</label><br> 
+                            <input type="checkbox" id="ws" name="ws" value="ws" checked="checked">
+                            <label for="ws"> West Side</label><br> 
+                            <input type="checkbox" id="h" name="h" value="h" checked="checked">
+                            <label for="h"> Highland</label><br> 
                     </div>
                     <div class="cell small-3">
                         <span>Start Date</span><br>
                         <input 
-                        v-model="date"
                         type="date"
-                        placeholder="Enter the desired start date" 
+                        value="2014-08-14"
+                        min="2014-08-14"
+                        max="2022-11-15"
                         />
                         <span>End Date</span><br>
                         <input 
-                        v-model="date"
                         type="date"
-                        placeholder="Enter the desired end date" 
+                        value="2022-11-14"
+                        min="2014-08-14"
+                        max="2022-11-15"
                         />
                     </div>
                     <div class="cell small-3">
                         <span>Max number of incidents</span><br>
                         <input 
-                            v-model="code"
                             type="number"
-                            placeholder="Enter the max number"
+                            min="1"
+                            max="1000"
+                            value= "1000"
                         />
                     </div>
                     <input type="submit"/>
