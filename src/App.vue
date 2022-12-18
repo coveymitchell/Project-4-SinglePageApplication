@@ -466,7 +466,7 @@ export default {
             </div>
             <hr width = "60%">
             <div class="grid-x grid-padding-x">
-                <h3 class="cell small-12 medium-3 large-3"> Tim Larson</h3>
+                <h3 class="cell small-12 medium-3 large-3" id="abouth"> Tim Larson</h3>
                 <img src="images/tim_pic.jpg" alt="A picture of Tim with a mall Santa, age 1" class="cell small-12 medium-8 large-3" id="aboutImg">
                 <p class="cell small-12 medium-12 large-3" id="aboutPara">
                     Tim is from North St Paul, Minnesota. His hobbies include video games, cars, and the outdoors. A fun fact about Tim is that he has 
@@ -475,7 +475,7 @@ export default {
                 </p>
             </div>
             <div class="grid-x grid-padding-x">
-                <h3 class="cell small-12 medium-3 large-3"> Mitch Covey</h3>
+                <h3 class="cell small-12 medium-3 large-3" id="abouth"> Mitch Covey</h3>
                 <img src="images/mitch_pic.jpg" alt="A picture of Mitch" class="cell small-12 medium-8 large-3" id="aboutImg">
                 <p class="cell small-12 medium-12 large-3" id="aboutPara">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
@@ -485,7 +485,7 @@ export default {
                 </p>
             </div>
             <div class="grid-x grid-padding-x">
-                <h3 class="cell small-12 medium-3 large-3"> Mike Twohy</h3>
+                <h3 class="cell small-12 medium-3 large-3" id="abouth"> Mike Twohy</h3>
                 <img src="images/mike_pic.jpg" alt="A picture of Mike" class="cell small-12 medium-8 large-3" id="aboutImg">
                 <p class="cell small-12 medium-12 large-3" id="aboutPara">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
@@ -500,7 +500,7 @@ export default {
             </div>
             <hr width = "60%">
             <div class="grid-x grid-padding-x">
-                <h3 class="cell small-12 medium-3 large-3">St. Paul Police Data API </h3>
+                <h3 class="cell small-12 medium-3 large-3" id="abouth">St. Paul Police Data API </h3>
                 <img src="images/st_paul_logo.png" alt="The St Paul City logo" class="cell small-12 medium-8 large-3" id="aboutImg">
                 <p class="cell small-12 medium-12 large-3" id="aboutPara">
                     This API was created by Tim, Mitch, and Mike to access information from the St. Paul Crime database. The API includes
@@ -509,7 +509,7 @@ export default {
                 </p>
             </div>
             <div class="grid-x grid-padding-x">
-                <h3 class="cell small-12 medium-3 large-3">Foundation CSS Framework</h3>
+                <h3 class="cell small-12 medium-3 large-3" id="abouth">Foundation CSS Framework</h3>
                 <img src="images/foundation_logo.png" alt="The Foundation CSS logo" class="cell small-12 medium-8 large-3" id="aboutImg"> 
                 <p class="cell small-12 medium-12 large-3" id="aboutPara">
                     A Framework for any device, medium, and accessibility. Foundation is a family of responsive front-end frameworks that make it easy to 
@@ -519,7 +519,7 @@ export default {
                 </p>
             </div>
             <div class="grid-x grid-padding-x">
-                <h3 class="cell small-12 medium-3 large-3">Vue.js</h3>
+                <h3 class="cell small-12 medium-3 large-3" id="abouth">Vue.js</h3>
                 <img src="images/vue_logo.png" alt="The Vue.js logo" class="cell small-12 medium-8 large-3" id="aboutImg">
                 <p class="cell small-12 medium-12 large-3" id="aboutPara">
                     Vue is a JavaScript framework for building user interfaces. It builds on top of standard HTML, 
@@ -534,42 +534,42 @@ export default {
             <hr width = "60%">
             <div class="grid-x grid-padding-x">
                 <div class="cell small-12 medium-6 large-4">
-                    <h4> Finding Title</h4>
+                    <h4 id="abouth"> Finding Title</h4>
                     <p id="aboutPara">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                     </p>
                 </div>
                 <div class="cell small-12 medium-6 large-4">
-                    <h4> Finding Title</h4>
+                    <h4 id="abouth"> Finding Title</h4>
                     <p id="aboutPara">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                     </p>
                 </div>
                 <div class="cell small-12 medium-6 large-4">
-                    <h4> Finding Title</h4>
+                    <h4 id="abouth"> Finding Title</h4>
                     <p id="aboutPara">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                     </p>
                 </div>
                 <div class="cell small-12 medium-6 large-4">
-                    <h4> Finding Title</h4>
+                    <h4 id="abouth"> Finding Title</h4>
                     <p id="aboutPara">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                     </p>
                 </div>
                 <div class="cell small-12 medium-6 large-4">
-                    <h4> Finding Title</h4>
+                    <h4 id="abouth"> Finding Title</h4>
                     <p id="aboutPara">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                     </p>
                 </div>
                 <div class="cell small-12 medium-6 large-4">
-                    <h4> Finding Title</h4>
+                    <h4 id="abouth"> Finding Title</h4>
                     <p id="aboutPara">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
