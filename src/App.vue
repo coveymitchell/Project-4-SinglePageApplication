@@ -51,13 +51,23 @@ export default {
                     { location: [44.949203, -93.093739], marker: null }
                 ]
             },
-            legendEntries: [
-                { color: "red", meaning: "Violent" },
-                { color: "green", meaning: "Property" },
-                { color: "yellow", meaning: "Other" } 
-            ],
-            search: "",
-            showIncidentPopup: false,
+            // map page
+            mapPage: {
+                search: "",
+                showIncidentPopup: false,
+
+                table: {
+                    legend: [
+                        { color: "red", meaning: "Violent" },
+                        { color: "green", meaning: "Property" },
+                        { color: "yellow", meaning: "Other" } 
+                    ],
+                    incidents: []
+                }    
+            },
+            
+            
+
             //Submission form info
             incident_url: "",
             case_number: "",
@@ -124,7 +134,7 @@ export default {
             this.leaflet.map.flyTo(clampedCoord, zoom)
         },
         onMapMoveOrZoom(lat, lng) {
-            this.search = `${lat}, ${lng}`
+            this.mapPage.search = `${lat}, ${lng}`
             this.leaflet.center.lat = lat
             this.leaflet.center.lng = lng
         },
@@ -148,11 +158,11 @@ export default {
         },
         onDeleteIncident(incident) {
             // todo delete incident
-            this.showIncidentPopup = false
+            this.mapPage.showIncidentPopup = false
         },
         onSelectIncident(incident) {
             // todo show marker on map
-            this.showIncidentPopup = true
+            this.mapPage.showIncidentPopup = true
         }
     },
     mounted() {
@@ -187,14 +197,14 @@ export default {
     <!-- Popup Container -->
     <div 
         class="popup-container" 
-        v-if="showIncidentPopup" 
-        @click="this.showIncidentPopup=false"
+        v-if="mapPage.showIncidentPopup" 
+        @click="this.mapPage.showIncidentPopup=false"
     >
         <CrimeMarkerPopup 
             date="12-17-2021"
             time="12:07pm"
             incident="Hello World!"
-            v-if="showIncidentPopup" 
+            v-if="mapPage.showIncidentPopup" 
             @click:delete="onDeleteIncident(null)"
         />
     </div>
@@ -209,14 +219,14 @@ export default {
     </div>
 
     <!-- Map Page -->
-    <div v-show="view === 'map'" @keyup.enter="onClickGo(this.search)">
+    <div v-show="view === 'map'" @keyup.enter="onClickGo(this.mapPage.search)">
         <div class="grid-container">
             <div class="grid-y grid-padding-y">
                 <div id="leafletmap" class="cell"></div>
-                <Legend :legendEntries="this.legendEntries"/>
+                <Legend :legendEntries="this.mapPage.table.legend" />
                 <SearchBar 
                     class="cell"
-                    v-model:search="search"
+                    v-model:search="mapPage.search"
                     @click:go="onClickGo"
                 />
             </div>
