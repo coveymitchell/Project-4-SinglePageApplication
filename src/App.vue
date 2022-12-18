@@ -2,7 +2,7 @@
 import $ from 'jquery'
 import CrimeMarkerPopup from './components/CrimeMarkerPopup.vue';
 import SearchBar from './components/SearchBar.vue';
-import MapLegend from './components/MapLegend.vue'
+import Legend from './components/Legend.vue'
 import { 
     isAddress, 
     isCoordinate, 
@@ -179,7 +179,7 @@ export default {
             this.onMapMoveOrZoom(latLng.lat, latLng.lng)
         })
     },
-    components: { SearchBar, CrimeMarkerPopup, MapLegend }
+    components: { SearchBar, CrimeMarkerPopup, Legend }
 }
 </script>
 
@@ -213,7 +213,7 @@ export default {
         <div class="grid-container">
             <div class="grid-y grid-padding-y">
                 <div id="leafletmap" class="cell"></div>
-                <MapLegend :legendEntries="this.legendEntries"/>
+                <Legend :legendEntries="this.legendEntries"/>
                 <SearchBar 
                     class="cell"
                     v-model:search="search"
