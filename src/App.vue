@@ -215,6 +215,52 @@ export default {
         </div>
         <div class="grid-container">
             <div class="grid-x grid-padding-x">
+                <form @submit.prevent="submitForm" v-if="!formSubmitted"> 
+                    <div class="cell small-3">
+                        <span>Incident Type</span><br>
+                            <input type="checkbox" id="naroctics" name="narcotics" value="Narcotics"> <!--value may need to be changed to whatever is passed to API-->
+                            <label for="narcotics"> Narcotics</label><br>
+                            <input type="checkbox" id="crimeType" name="crimeType" value="crimeType">
+                            <label for="narcotics"> Crime Type</label><br>
+                    </div>
+                    <div class="cell small-3">
+                        <span>Neighborhood</span><br>
+                            <input type="checkbox" id="summithill" name="summithill" value="summithill"> <!--value may need to be changed to whatever is passed to API-->
+                            <label for="summithill"> Summit-Hill</label><br>
+                            <input type="checkbox" id="neighborhood" name="neighborhood" value="neighborhood">
+                            <label for="neighborhood"> Neighborhood</label><br>
+                    </div>
+                    <div class="cell small-3">
+                        <span>Start Date</span><br>
+                        <input 
+                        v-model="date"
+                        type="date"
+                        placeholder="Enter the desired start date" 
+                        />
+                        <span>End Date</span><br>
+                        <input 
+                        v-model="date"
+                        type="date"
+                        placeholder="Enter the desired end date" 
+                        />
+                    </div>
+                    <div class="cell small-3">
+                        <span>Max number of incidents</span><br>
+                        <input 
+                            v-model="code"
+                            type="number"
+                            placeholder="Enter the max number"
+                        />
+                    </div>
+                    <input type="submit"/>
+                    <br>
+                    <br>
+                </form>
+            </div>
+        </div>       
+        <!--Incident pop up and color key-->
+        <div class="grid-container">
+            <div class="grid-x grid-padding-x">
                 <button  
                     class="button cell small-4" 
                     @click="this.showIncidentPopup = true"
@@ -237,7 +283,7 @@ export default {
                         </tr>
                         <tr id="other">
                             <td>Other</td>
-                            <td> Blue</td>
+                            <td> Yellow</td>
                         </tr>
                     </tbody>
                 </table>
@@ -291,7 +337,7 @@ export default {
                             <td>test</td>
                             <td>test</td>
                         </tr>
-                        <tr v-for="incident in incidents">
+                        <tr v-for="incident in incidents" v-bind:id="incident.code > 0 && incident.code < 400">
                             <td>{{ incident.case_number }}</td>
                             <td>{{ incident.date }}</td>
                             <td>{{ incident.time }}</td>
