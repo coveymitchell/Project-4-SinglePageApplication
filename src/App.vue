@@ -61,8 +61,7 @@ export default {
                         { color: "red", meaning: "Violent" },
                         { color: "green", meaning: "Property" },
                         { color: "yellow", meaning: "Other" } 
-                    ],
-                    incidents: []
+                    ]
                 }    
             },
             
@@ -81,6 +80,13 @@ export default {
             formSubmitted: false
         };
     },
+    computed: {
+        filteredIncidents() {
+            return this.incidents.filter(incident => {
+                true
+            })
+        }
+    },
     methods: {
         viewMap(event) {
             this.view = "map";
@@ -91,8 +97,29 @@ export default {
         viewAbout(event) {
             this.view = "about";
         },
+        getCodes() {
+            return this.getJSON('http://localhost:8000/codes')
+        },
+        getNeighborhoods() {
+            return this.getJSON('http://localhost:8000/neighborhoods')
+        },
+        getIncidents(neighborhoodCode=null, limit=null) {
+            let conditions = []
+            let query = ''
 
+            if (neighborhoodCode !== null) {
+                conditions.push(`neighborhood=${neighborhoodCode}`)
+            }
+            if (limit !== null) {
+                conditions.push(`limit=${limit}`)
+            }
+            if (conditions.length !== 0) {
+                query = '?' + conditions.join('&')
+            }
+            return this.getJSON(`http://localhost:8000/incidents${query}`)
+        },
         submitForm() {
+            this.incidents = this.getJSON(url)
             this.formSubmitted = true
         },
 
@@ -188,6 +215,23 @@ export default {
             let latLng = this.leaflet.map.getCenter()
             this.onMapMoveOrZoom(latLng.lat, latLng.lng)
         })
+
+        Promise.all([
+            this.getCodes(),
+            this.getNeighborhoods(),
+        ])
+        .then(([codes, neighborhoods]) => {
+            let TEMP_LIMIT = 10 // todo add to model
+            this.codes = codes
+            this.neighborhoods = neighborhoods
+            return this.getIncidents(neighborhoods[0].code, TEMP_LIMIT)
+        })
+        .then(incidents => {
+            this.incidents = incidents
+            console.log(incidents);
+        })
+        .catch(err => console.log("failed to retrieve data from REST server"))
+        
     },
     components: { SearchBar, CrimeMarkerPopup, Legend }
 }
@@ -311,67 +355,35 @@ export default {
         </div>       
     
         <!--Table-->
-        <div class="grid-container">
-            <div class="grid-x grid-padding-x">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Case Number</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Code</th>
-                            <th>Incident</th>
-                            <th>Police Grid</th>
-                            <th>Neighborhood</th>
-                            <th>Block</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                        </tr>
-                        <tr>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                        </tr>
-                        <tr>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                        </tr>
-                        <tr v-for="incident in incidents" v-bind:id="incident.code > 0 && incident.code < 400">
-                            <td>{{ incident.case_number }}</td>
-                            <td>{{ incident.date }}</td>
-                            <td>{{ incident.time }}</td>
-                            <td>{{ incident.code }}</td>
-                            <td>{{ incident.incident }}</td>
-                            <td>{{ incident.police_grid }}</td>
-                            <td>{{ incident.neighborhood }}</td>
-                            <td>{{ incident.block }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Case Number</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Code</th>
+                    <th>Incident</th>
+                    <th>Police Grid</th>
+                    <th>Neighborhood</th>
+                    <th>Block</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="incident in this.incidents" v-bind:id="incident.code">
+                    <td>{{ incident.case_number }}</td>
+                    <td>{{ incident.date }}</td>
+                    <td>{{ incident.time }}</td>
+                    <td>{{ incident.code }}</td>
+                    <td>{{ incident.incident }}</td>
+                    <td>{{ incident.police_grid }}</td>
+                    <td>{{ incident.neighborhood }}</td>
+                    <td>{{ incident.block }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
+
+    <!-- New Incident Page -->
     <div v-if="view === 'new_incident'">
         <!-- Replace this with your actual form: can be done here or by making a new component -->
         <div class="grid-container">
