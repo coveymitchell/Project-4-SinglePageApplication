@@ -74,3 +74,7 @@ hr {
 	justify-content: center;
 	align-items: center;
 }
+
+.noBulletPoints {
+    list-style-type: none
+}

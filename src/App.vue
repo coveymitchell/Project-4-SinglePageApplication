@@ -62,7 +62,38 @@ export default {
                         { color: "green", meaning: "Property" },
                         { color: "yellow", meaning: "Other" } 
                     ]
-                }    
+                },
+                searchFilter: {
+                    incidentTypes: [
+                        { isChecked: true, name: "Narcotics", filter: (code) => code >= 1800 && code <= 1885 }
+                    ],
+                    // todo: these should be generated from REST api. 
+                    // todo might need to add 'code' attribute to each item
+                    neighborhoods: [
+                        { isChecked: true, name: "Summit-University"},
+                        { isChecked: true, name: "Saint Anthony Park"},
+                        { isChecked: true, name: "Como Park"},
+                        { isChecked: true, name: "North End"},
+                        { isChecked: true, name: "Payne-Phalen"},
+                        { isChecked: true, name: "Greater East Side"},
+                        { isChecked: true, name: "Hameline-Midway"},
+                        { isChecked: true, name: "Frogtown"},
+                        { isChecked: true, name: "Dayton's Bluff"},
+                        { isChecked: true, name: "Southeast"},
+                        { isChecked: true, name: "Union Park"},
+                        { isChecked: true, name: "Downtown"},
+                        { isChecked: true, name: "Macalester-Groveland"},
+                        { isChecked: true, name: "Summit Hill"},
+                        { isChecked: true, name: "West Seventh-Fort Road"},
+                        { isChecked: true, name: "West Side"},
+                        { isChecked: true, name: "Highland"},
+                        
+
+                    ],
+                    startDate: "2014-08-14",
+                    endDate: "2022-11-14",
+                    limit: 100
+                }
             },
             
             
@@ -85,7 +116,7 @@ export default {
             return this.incidents.filter(incident => {
                 true
             })
-        }
+        },
     },
     methods: {
         viewMap(event) {
@@ -119,7 +150,6 @@ export default {
             return this.getJSON(`http://localhost:8000/incidents${query}`)
         },
         submitForm() {
-            this.incidents = this.getJSON(url)
             this.formSubmitted = true
         },
 
@@ -190,6 +220,13 @@ export default {
         onSelectIncident(incident) {
             // todo show marker on map
             this.mapPage.showIncidentPopup = true
+        },
+        onClickSearchIncidents() {
+            this.getIncidents(null, this.mapPage.searchFilter.limit)
+            .then(incidents => {
+                this.incidents = incidents
+                this.formSubmitted = true
+            })
         }
     },
     mounted() {
@@ -265,122 +302,102 @@ export default {
     <!-- Map Page -->
     <div v-show="view === 'map'" @keyup.enter="onClickGo(this.mapPage.search)">
         <div class="grid-container">
+            <!-- Map -->
             <div class="grid-y grid-padding-y">
                 <div id="leafletmap" class="cell"></div>
-                <Legend :legendEntries="this.mapPage.table.legend" />
                 <SearchBar 
                     class="cell"
                     v-model:search="mapPage.search"
                     @click:go="onClickGo"
                 />
             </div>
-        </div>
-        <div class="grid-container">
-            <div class="grid-x grid-padding-x">
-                <form @submit.prevent="submitForm" v-if="!formSubmitted"> 
-                    <div class="cell small-3">
-                        <span>Incident Type</span><br>
-                            <input type="checkbox" id="naroctics" name="narcotics" value="Narcotics" checked="checked"> <!--value may need to be changed to whatever is passed to API-->
-                            <label for="narcotics"> Narcotics</label><br>
-                            <input type="checkbox" id="crimeType" name="crimeType" value="crimeType" checked="checked">
-                            <label for="narcotics"> Crime Type</label><br>
-                    </div>
-                    <div class="cell small-3">
-                        <span>Neighborhood</span><br>
-                            <input type="checkbox" id="su" name="su" value="su" checked="checked"> <!--value may need to be changed to whatever is passed to API-->
-                            <label for="su"> Summit-University</label><br>
-                            <input type="checkbox" id="sap" name="sap" value="sap" checked="checked">
-                            <label for="sap"> Saint Anthony Park</label><br> 
-                            <input type="checkbox" id="c" name="c" value="c" checked="checked">
-                            <label for="c"> Como Park</label><br> 
-                            <input type="checkbox" id="ne" name="ne" value="ne" checked="checked">
-                            <label for="ne"> North End</label><br> 
-                            <input type="checkbox" id="pp" name="pp" value="pp" checked="checked">
-                            <label for="pp"> Payne-Phalen</label><br> 
-                            <input type="checkbox" id="ges" name="ges" value="ges" checked="checked">
-                            <label for="ges"> Greater East Side</label><br> 
-                            <input type="checkbox" id="hm" name="hm" value="hm" checked="checked">
-                            <label for="hm"> Hameline-Midway</label><br> 
-                            <input type="checkbox" id="f" name="f" value="f" checked="checked">
-                            <label for="f"> Frogtown</label><br> 
-                            <input type="checkbox" id="db" name="db" value="db" checked="checked">
-                            <label for="db"> Dayton's Bluff</label><br> 
-                            <input type="checkbox" id="s" name="s" value="s" checked="checked">
-                            <label for="s"> Southeast</label><br> 
-                            <input type="checkbox" id="up" name="up" value="up" checked="checked">
-                            <label for="up"> Union Park</label><br> 
-                            <input type="checkbox" id="d" name="d" value="d" checked="checked">
-                            <label for="d"> Downtown</label><br> 
-                            <input type="checkbox" id="mg" name="mg" value="mg" checked="checked">
-                            <label for="mg"> Macalester-Groveland</label><br> 
-                            <input type="checkbox" id="sh" name="sh" value="sh" checked="checked">
-                            <label for="sh"> Summit Hill</label><br> 
-                            <input type="checkbox" id="wsfr" name="wsfr" value="wsfr" checked="checked">
-                            <label for="wsfr"> West Seventh-Fort Road</label><br> 
-                            <input type="checkbox" id="ws" name="ws" value="ws" checked="checked">
-                            <label for="ws"> West Side</label><br> 
-                            <input type="checkbox" id="h" name="h" value="h" checked="checked">
-                            <label for="h"> Highland</label><br> 
-                    </div>
-                    <div class="cell small-3">
-                        <span>Start Date</span><br>
-                        <input 
-                        type="date"
-                        value="2014-08-14"
-                        min="2014-08-14"
-                        max="2022-11-15"
-                        />
-                        <span>End Date</span><br>
-                        <input 
-                        type="date"
-                        value="2022-11-14"
-                        min="2014-08-14"
-                        max="2022-11-15"
-                        />
-                    </div>
-                    <div class="cell small-3">
-                        <span>Max number of incidents</span><br>
-                        <input 
-                            type="number"
-                            min="1"
-                            max="1000"
-                            value= "1000"
-                        />
-                    </div>
-                    <input type="submit"/>
-                    <br>
-                    <br>
-                </form>
+
+            <!-- Search Filters -->
+            <div>
+                <h6>Incident Type</h6>
+                <ul class="noBulletPoints">
+                    <li v-for="incidentType in mapPage.searchFilter.incidentTypes">
+                        <label>
+                            <input 
+                                type="checkbox" 
+                                value="{{ incidentType.label }}" 
+                                v-model=incidentType.isChecked
+                            />
+                            {{ incidentType.name }}
+                        </label>
+                    </li>
+                </ul>
+
+                <h6>Neighborhood</h6>
+                <ul class="noBulletPoints">
+                    <li v-for="neighborhood in mapPage.searchFilter.neighborhoods">
+                        <label>
+                            <input 
+                                type="checkbox"
+                                value="{{ neighborhood.label }}" 
+                                v-model=neighborhood.isChecked
+                            />
+                            {{ neighborhood.name }}
+                        </label>
+                    </li>
+                </ul>
+
+                <h6>Start Date</h6>
+                <input 
+                    type="date"
+                    min="2014-08-14"
+                    max="2022-11-15"
+                    v-model=mapPage.searchFilter.startDate
+                />
+
+                <h6>End Date</h6>
+                <input 
+                    type="date"
+                    min="2014-08-14"
+                    max="2022-11-15"
+                    v-model=mapPage.searchFilter.startDate
+                />
+
+                <h6>Max Number of Incidents</h6>
+                <input 
+                    type="number"
+                    min="1"
+                    max="1000"
+                    v-model="mapPage.searchFilter.limit"
+                />
+
+                <button class="button" @click="this.onClickSearchIncidents">Search Incidents</button>
             </div>
-        </div>       
-    
-        <!--Table-->
-        <table>
-            <thead>
-                <tr>
-                    <th>Case Number</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Code</th>
-                    <th>Incident</th>
-                    <th>Police Grid</th>
-                    <th>Neighborhood</th>
-                    <th>Block</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="incident in this.incidents" v-bind:id="incident.code">
-                    <td>{{ incident.case_number }}</td>
-                    <td>{{ incident.date }}</td>
-                    <td>{{ incident.time }}</td>
-                    <td>{{ incident.code }}</td>
-                    <td>{{ incident.incident }}</td>
-                    <td>{{ incident.police_grid }}</td>
-                    <td>{{ incident.neighborhood }}</td>
-                    <td>{{ incident.block }}</td>
-                </tr>
-            </tbody>
-        </table>
+
+            <!--Table-->
+            <Legend :legendEntries="this.mapPage.table.legend" />
+            <table>
+                <thead>
+                    <tr>
+                        <th>Case Number</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Code</th>
+                        <th>Incident</th>
+                        <th>Police Grid</th>
+                        <th>Neighborhood</th>
+                        <th>Block</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="incident in this.incidents" v-bind:id="incident.code">
+                        <td>{{ incident.case_number }}</td>
+                        <td>{{ incident.date }}</td>
+                        <td>{{ incident.time }}</td>
+                        <td>{{ incident.code }}</td>
+                        <td>{{ incident.incident }}</td>
+                        <td>{{ incident.police_grid }}</td>
+                        <td>{{ incident.neighborhood }}</td>
+                        <td>{{ incident.block }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <!-- New Incident Page -->
