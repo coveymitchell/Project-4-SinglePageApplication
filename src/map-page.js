@@ -45,6 +45,14 @@ export function getCoordinatesFromAddress(address) {
     }) 
 }
 
+export function rangeToList(start, end) {
+    let list = []
+    for (let i = start; i <= end; i++) {
+        list.push(i)
+    }
+    return list
+}
+
 function createNominatimUrl(q, format="json") {
     return `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=${format}`
 }
