@@ -51,6 +51,11 @@ export default {
                     { location: [44.949203, -93.093739], marker: null }
                 ]
             },
+            legendEntries: [
+                { color: "red", meaning: "Violent" },
+                { color: "green", meaning: "Property" },
+                { color: "yellow", meaning: "Other" } 
+            ],
             search: "",
             showIncidentPopup: false,
             //Submission form info
@@ -208,7 +213,7 @@ export default {
         <div class="grid-container">
             <div class="grid-y grid-padding-y">
                 <div id="leafletmap" class="cell"></div>
-                <MapLegend/>
+                <MapLegend :legendEntries="this.legendEntries"/>
                 <SearchBar 
                     class="cell"
                     v-model:search="search"
@@ -294,38 +299,7 @@ export default {
                 </form>
             </div>
         </div>       
-        <!--Incident pop up and color key-->
-        <div class="grid-container">
-            <div class="grid-x grid-padding-x">
-                <button  
-                    class="button cell small-4" 
-                    @click="this.showIncidentPopup = true"
-                >(TEMP) Show Incident Popup</button>
-                <table class="cell small-8">
-                    <thead>
-                        <tr>
-                            <th> Crime Type</th>
-                            <th> Color </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr id="violent">
-                            <td> Violent</td>
-                            <td> Red </td>
-                        </tr>
-                        <tr id="property">
-                            <td> Property</td>
-                            <td> Green</td>
-                        </tr>
-                        <tr id="other">
-                            <td>Other</td>
-                            <td> Yellow</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div> 
-        
+    
         <!--Table-->
         <div class="grid-container">
             <div class="grid-x grid-padding-x">

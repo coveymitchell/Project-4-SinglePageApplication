@@ -1,14 +1,6 @@
 <script>
 export default {
-    data() {
-        return {
-            legendEntries: [
-                { color: "red", meaning: "Violent" },
-                { color: "green", meaning: "Property" },
-                { color: "yellow", meaning: "Other" } 
-            ]
-        }
-    }
+    props: ['legendEntries']
 }
 </script>
 
