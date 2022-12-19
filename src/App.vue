@@ -603,31 +603,29 @@ export default {
                     </p>
                 </div>
                 <div class="cell small-12 medium-6 large-4">
-                    <h4 id="abouth"> Finding Title</h4>
+                    <h4 id="abouth"> Crime Type</h4>
                     <p id="aboutPara">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    The most common type of crime in St Paul for the dataset was property crime, which is good we think?
                     </p>
                 </div>
                 <div class="cell small-12 medium-6 large-4">
-                    <h4 id="abouth"> Finding Title</h4>
+                    <h4 id="abouth"> Neighborhood Names</h4>
                     <p id="aboutPara">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    During the research for the map and neighborhood functionality, we thought it was interesting that some of the neighboorhood names were
+                    different than what we had heard living in St Paul. For example, we had always thought it was Highland Park, rather than just Highland.
                     </p>
                 </div>
                 <div class="cell small-12 medium-6 large-4">
-                    <h4 id="abouth"> Finding Title</h4>
+                    <h4 id="abouth"> Frog Town? More like fraud town</h4>
                     <p id="aboutPara">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Despite the name being frog town, we found there was an alarmingly low amount of frog related crimes in the neighboorhood. This smells
+                    like fraud to me!
                     </p>
                 </div>
                 <div class="cell small-12 medium-6 large-4">
-                    <h4 id="abouth"> Finding Title</h4>
+                    <h4 id="abouth"> A Yeti?</h4>
                     <p id="aboutPara">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    The mascout for Foundation is a Yeti. Why? Who knows. They had a contest and a yeti won. Now it has glasses, which is cool.
                     </p>
                 </div>
             </div>
