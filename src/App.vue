@@ -173,7 +173,7 @@ export default {
         },
         submitForm() {
             this.formSubmitted = true
-            axios.put('/api/update-incident', {
+            axios.put('/new-incident', {
                 caseNumber: this.caseNumber,
                 date: this.date,
                 time: this.time,
@@ -328,7 +328,7 @@ export default {
             this.neighborhoods = neighborhoods
         })
         .catch(err => console.log("failed to retrieve data from REST server", err))
-        
+                
         for (let nm of this.leaflet.neighborhood_markers) {
             nm.marker = L.marker(nm.location)
             setTimeout(() => {
@@ -336,6 +336,7 @@ export default {
             }, 1000)
         }
         
+        this.onClickSearchIncidents();
     },
     components: { SearchBar, CrimeMarkerPopup, Legend }
 }
@@ -543,7 +544,7 @@ export default {
                 <img src="images/mike_pic.jpg" alt="A picture of Mike" class="cell small-12 medium-8 large-3" id="aboutImg">
                 <p class="cell small-12 medium-12 large-3" id="aboutPara">
                     Michael is from Roseville, Minnesota. In his free time, he likes to play and write music (both solo and in a band), create apps, and play video games.
-                    A fun fact abou Michael is that he has a pet tortoise, named Borris. 
+                    A fun fact about Michael is that he has a pet tortoise, named Borris. 
                 </p>
             </div>
             <hr>
