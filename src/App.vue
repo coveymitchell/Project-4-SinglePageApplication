@@ -66,7 +66,20 @@ export default {
                 },
                 searchFilter: {
                     incidentTypes: [
-                        { isChecked: true, name: "Narcotics", codes: rangeToList(1800, 1885) }
+                        { isChecked: true, name: "Narcotics", codes: rangeToList(1800, 1899) },
+                        { isChecked: true, name: "Theft", codes: rangeToList(600, 699) },
+                        { isChecked: true, name: "Burglary", codes: rangeToList(500, 599) },
+                        { isChecked: true, name: "Auto Theft", codes: rangeToList(700, 799) },
+                        { isChecked: true, name: "Agg. Assault", codes: rangeToList(400, 499) },
+                        { isChecked: true, name: "Property Damage", codes: rangeToList(1400, 1499) },
+                        { isChecked: true, name: "Simple Assault", codes: rangeToList(800, 899) },
+                        { isChecked: true, name: "Discharge", codes: rangeToList(2619, 2619) },
+                        { isChecked: true, name: "Robbery", codes: rangeToList(300, 399) },
+                        { isChecked: true, name: "Arson", codes: rangeToList(900, 999) },
+                        { isChecked: true, name: "Rape", codes: rangeToList(200, 299) },
+                        { isChecked: true, name: "Codes 0-199", codes: rangeToList(0, 199) },
+                        { isChecked: true, name: "Codes 1000-1399", codes: rangeToList(1000, 1399) },
+                        { isChecked: true, name: "Codes 1500-1799", codes: rangeToList(1500, 1799) }
                     ],
                     // todo: these should be generated from REST api. 
                     // todo might need to add 'code' attribute to each item
@@ -127,6 +140,15 @@ export default {
         },
         getNeighborhoods() {
             return this.getJSON('http://localhost:8000/neighborhoods')
+        },
+        getColorFromCode(incidentCode){
+            if((incidentCode >=200 && incidentCode <=299) || (incidentCode >=400 && incidentCode <=499) || (incidentCode >=800 && incidentCode <=899) ){ //violent crimes
+                return "red";
+            } else if((incidentCode >=300 && incidentCode <=399) || (incidentCode >=500 && incidentCode <=699) || (incidentCode >=900 && incidentCode <=999) ||(incidentCode >=1400 && incidentCode <=1499)){ //property crimes
+                return "green";
+            } 
+            return "yellow";
+            
         },
         getIncidents(incidentCodes=null, neighborhoodCodes=null, limit=null) {
             let conditions = []
@@ -291,9 +313,9 @@ export default {
     <!-- Top Bar -->
     <div class="grid-container">
         <div class="grid-x grid-padding-x">
-            <p :class="'cell small-4' + ((view === 'map') ? 'selected' : 'unselected')" @click="viewMap">Map</p>
-            <p :class="'cell small-4' + ((view === 'new_incident') ? 'selected' : 'unselected')" @click="viewNewIncident">New Incident</p>
-            <p :class="'cell small-4' + ((view === 'about') ? 'selected' : 'unselected')" @click="viewAbout">About</p>
+            <p :class="'cell small-4' + ((view === 'map') ? 'selected' : 'unselected')" @click="viewMap" id="aboutPara">Map</p>
+            <p :class="'cell small-4' + ((view === 'new_incident') ? 'selected' : 'unselected')" @click="viewNewIncident" id="aboutPara">New Incident</p>
+            <p :class="'cell small-4' + ((view === 'about') ? 'selected' : 'unselected')" @click="viewAbout" id="aboutPara">About</p>
         </div>
     </div>
 
@@ -385,9 +407,10 @@ export default {
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- TODO getColorFromCode is undefined -->
+                    <!-- TODO getColorFromCode is undefined  -->
                     <tr 
                         v-for="incident in this.incidents" v-bind:id="incident.code"
+                        :style="{ 'background-color': getColorFromCode(incident.code) }"                       
                     >
                         <td>{{ incident.case_number }}</td>
                         <td>{{ incident.date }}</td>
@@ -553,17 +576,19 @@ export default {
             <hr width = "60%">
             <div class="grid-x grid-padding-x">
                 <div class="cell small-12 medium-6 large-4">
-                    <h4 id="abouth"> Finding Title</h4>
+                    <h4 id="abouth"> Police Code Meanings</h4>
                     <p id="aboutPara">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    When researching how to color code the crime types based on police codes, an interesting thing that I learned is that there are 
+                    no standardized ways of creating police codes, each state, county, or city could do something totaly different than the neighboring
+                    department.
                     </p>
                 </div>
                 <div class="cell small-12 medium-6 large-4">
-                    <h4 id="abouth"> Finding Title</h4>
+                    <h4 id="abouth"> Police Code Order </h4>
                     <p id="aboutPara">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Another interesting finding related to police codes is that they are not necessarily sequential, for example, 863 is the 
+                    code for a type of domestic assault, a violent crime, and so is 451. However, 600 is a theft code, so the assault types are 
+                    not next to each other.
                     </p>
                 </div>
                 <div class="cell small-12 medium-6 large-4">
