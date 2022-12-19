@@ -173,7 +173,7 @@ export default {
         },
         submitForm() {
             this.formSubmitted = true
-            axios.put('/api/update-incident', {
+            axios.put('/new-incident', {
                 caseNumber: this.caseNumber,
                 date: this.date,
                 time: this.time,
