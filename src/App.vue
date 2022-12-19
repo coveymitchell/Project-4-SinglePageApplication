@@ -446,7 +446,6 @@ export default {
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- TODO getColorFromCode is undefined  -->
                     <tr 
                         v-for="incident in this.incidents" v-bind:id="incident.code"
                         :style="{ 'background-color': getColorFromCode(incident.code) }"                       
