@@ -185,6 +185,27 @@ export default {
                 });
             });
         },
+        /**
+         * Adds leaflet marker from https://github.com/pointhi/leaflet-color-markers
+         * @param {Number} lat 
+         * @param {Number} lng 
+         * @param {String} color any of the color names listed in the link above
+         * @param {boolean} size either 1 or 2
+         */
+         addMarker(lat, lng, color='blue', large=false) {
+            let size = large ? '-2x' : ''
+            let filename = `marker-icon${size}-${color}.png`
+            let icon = new L.Icon({
+                iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/${filename}`,
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            })
+
+            L.marker([lat, lng], { icon: icon }).addTo(this.leaflet.map)
+        },
         flyTo(coordinate) {
             let zoom = this.leaflet.map.getMaxZoom()
             let bounds = this.leaflet.bounds
