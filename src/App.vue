@@ -10,6 +10,7 @@ import {
     isInBounds,
     clamp, 
     getCoordinatesFromAddress,
+    getCoordinatesFromIncident,
     rangeToList
 } from './map-page.js'
 
@@ -55,6 +56,7 @@ export default {
             // map page
             mapPage: {
                 search: "",
+                selectedIncident: null,
                 showIncidentPopup: false,
 
                 table: {
@@ -101,8 +103,6 @@ export default {
                         { isChecked: true, name: "West Seventh-Fort Road"},
                         { isChecked: true, name: "West Side"},
                         { isChecked: true, name: "Highland"},
-                        
-
                     ],
                     startDate: "2014-08-14",
                     endDate: "2022-11-14",
@@ -230,9 +230,10 @@ export default {
          * @param {Number} lat 
          * @param {Number} lng 
          * @param {String} color any of the color names listed in the link above
-         * @param {boolean} size either 1 or 2
+         * @param {boolean} large
          */
-         addMarker(lat, lng, color='blue', large=false) {
+         addMarker(lat, lng, color='blue', onClick=null) {
+            let large = false
             let size = large ? '-2x' : ''
             let filename = `marker-icon${size}-${color}.png`
             let icon = new L.Icon({
@@ -244,7 +245,10 @@ export default {
                 shadowSize: [41, 41]
             })
 
-            L.marker([lat, lng], { icon: icon }).addTo(this.leaflet.map)
+            let marker = L.marker([lat, lng], { icon: icon }).addTo(this.leaflet.map)
+            if (onClick !== null) {
+                marker.on('click', onClick)
+            }
         },
         flyTo(coordinate) {
             let zoom = this.leaflet.map.getMaxZoom()
@@ -279,9 +283,22 @@ export default {
             // todo delete incident
             this.mapPage.showIncidentPopup = false
         },
-        onSelectIncident(incident) {
-            // todo show marker on map
-            this.mapPage.showIncidentPopup = true
+        onSelectIncidentFromTable(incident) {            
+            console.log(incident);
+            getCoordinatesFromIncident(incident)
+            .then(coord => {
+                this.addMarker(coord.lat, coord.lng, 'red', () => { this.onSelectIncidentFromMap(incident) })
+            })
+            .catch(err => { 
+                this.onSelectIncidentFromMap(incident) 
+                alert("could not place marker on map")
+            })
+
+        },
+        onSelectIncidentFromMap(incident) {
+            window.scrollTo(0, 0)
+            this.mapPage.selectedIncident = incident
+            this.mapPage.showIncidentPopup = true 
         },
         onClickSearchIncidents() {
             let incidentCodes = this.mapPage.searchFilter.incidentTypes.flatMap(incident => incident.codes)
@@ -292,7 +309,7 @@ export default {
                 this.incidents = incidents
                 this.formSubmitted = true
             })
-        }
+        },
     },
     mounted() {
         this.leaflet.map = L.map("leafletmap").setView([this.leaflet.center.lat, this.leaflet.center.lng], this.leaflet.zoom);
@@ -337,15 +354,15 @@ export default {
     <!-- Popup Container -->
     <div 
         class="popup-container" 
-        v-if="mapPage.showIncidentPopup" 
+        v-if="mapPage.showIncidentPopup && mapPage.selectedIncident !== null" 
         @click="this.mapPage.showIncidentPopup=false"
     >
         <CrimeMarkerPopup 
-            date="12-17-2021"
-            time="12:07pm"
-            incident="Hello World!"
-            v-if="mapPage.showIncidentPopup" 
-            @click:delete="onDeleteIncident(null)"
+            v-bind:date="this.mapPage.selectedIncident.date_time.split('T')[0]"
+            v-bind:time="this.mapPage.selectedIncident.date_time.split('T')[1]"
+            v-bind:incident="this.mapPage.selectedIncident.incident"
+            v-if="mapPage.showIncidentPopup && mapPage.selectedIncident !== null" 
+            @click:delete="onDeleteIncident(this.mapPage.selectedIncident)"
         />
     </div>
     
@@ -447,8 +464,10 @@ export default {
                 </thead>
                 <tbody>
                     <tr 
+                        class="clickable"
                         v-for="incident in this.incidents" v-bind:id="incident.code"
-                        :style="{ 'background-color': getColorFromCode(incident.code) }"                       
+                        :style="{ 'background-color': getColorFromCode(incident.code) }"
+                        @click="this.onSelectIncidentFromTable(incident)"                      
                     >
                         <td>{{ incident.case_number }}</td>
                         <td>{{ incident.date }}</td>

@@ -10,7 +10,7 @@ export default {
     <p class="popup-header">Incident Report</p>
     <p><span>Date: </span>{{date}}</p>
     <p><span>Time: </span>{{time}}</p>
-    <p><span>Incident: </span><br/>{{incident}}</p>
+    <p><span>Incident: </span>{{incident}}</p>
     <div class="button-container">
         <button 
             class="button button-color secondary" 

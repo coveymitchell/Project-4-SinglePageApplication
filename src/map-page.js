@@ -41,8 +41,18 @@ export function getCoordinatesFromAddress(address) {
         .then(response => response.json())
         .then(data => {
             resolve({ lat: data[0].lat, lng: data[0].lon })
-        }); 
+        })
+        .catch(err => {
+            reject(err)
+        })
     }) 
+}
+
+export function getCoordinatesFromIncident(Incident) {
+    let address = Incident.block.split(' ')
+    address[0] = address[0].replace('X', '0')
+    address = address.join(' ')
+    return getCoordinatesFromAddress(address)
 }
 
 export function rangeToList(start, end) {

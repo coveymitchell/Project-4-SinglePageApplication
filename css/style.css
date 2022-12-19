@@ -78,3 +78,12 @@ hr {
 .noBulletPoints {
     list-style-type: none
 }
+
+.clickable {
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.clickable:hover {
+    background-color: lightgray;
+}
