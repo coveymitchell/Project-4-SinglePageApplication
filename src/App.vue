@@ -1,6 +1,5 @@
 <script>
 import $ from 'jquery'
-import axios from 'axios'
 import CrimeMarkerPopup from './components/CrimeMarkerPopup.vue';
 import SearchBar from './components/SearchBar.vue';
 import Legend from './components/Legend.vue'
