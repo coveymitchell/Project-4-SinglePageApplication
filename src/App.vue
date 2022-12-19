@@ -469,8 +469,8 @@ export default {
                         @click="this.onSelectIncidentFromTable(incident)"                      
                     >
                         <td>{{ incident.case_number }}</td>
-                        <td>{{ incident.date }}</td>
-                        <td>{{ incident.time }}</td>
+                        <td>{{ incident.date_time.split('T')[0] }}</td>
+                        <td>{{ incident.date_time.split('T')[1] }}</td>
                         <td>{{ incident.code }}</td>
                         <td>{{ incident.incident }}</td>
                         <td>{{ incident.police_grid }}</td>
