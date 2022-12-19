@@ -329,6 +329,13 @@ export default {
         })
         .catch(err => console.log("failed to retrieve data from REST server", err))
         
+        for (let nm of this.leaflet.neighborhood_markers) {
+            nm.marker = L.marker(nm.location)
+            setTimeout(() => {
+                nm.marker.addTo(this.leaflet.map)
+            }, 1000)
+        }
+        
     },
     components: { SearchBar, CrimeMarkerPopup, Legend }
 }
