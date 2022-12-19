@@ -10,7 +10,6 @@ import {
     isInBounds,
     clamp, 
     getCoordinatesFromAddress,
-    getCoordinatesFromIncident,
     rangeToList
 } from './map-page.js'
 
@@ -56,7 +55,6 @@ export default {
             // map page
             mapPage: {
                 search: "",
-                selectedIncident: null,
                 showIncidentPopup: false,
 
                 table: {
@@ -103,6 +101,8 @@ export default {
                         { isChecked: true, name: "West Seventh-Fort Road"},
                         { isChecked: true, name: "West Side"},
                         { isChecked: true, name: "Highland"},
+                        
+
                     ],
                     startDate: "2014-08-14",
                     endDate: "2022-11-14",
@@ -120,7 +120,8 @@ export default {
             incident: '',
             policeGrid: '',
             neighborhoodNumber: '',
-            block: ''
+            block: '',
+            formSubmitted: false
         };
     },
     methods: {
@@ -171,6 +172,7 @@ export default {
             return this.getJSON(`http://localhost:8000/incidents${query}`)
         },
         submitForm() {
+            this.formSubmitted = true
             axios.put('/api/update-incident', {
                 caseNumber: this.caseNumber,
                 date: this.date,
@@ -229,10 +231,9 @@ export default {
          * @param {Number} lat 
          * @param {Number} lng 
          * @param {String} color any of the color names listed in the link above
-         * @param {boolean} large
+         * @param {boolean} size either 1 or 2
          */
-         addMarker(lat, lng, color='blue', onClick=null) {
-            let large = false
+         addMarker(lat, lng, color='blue', large=false) {
             let size = large ? '-2x' : ''
             let filename = `marker-icon${size}-${color}.png`
             let icon = new L.Icon({
@@ -244,10 +245,7 @@ export default {
                 shadowSize: [41, 41]
             })
 
-            let marker = L.marker([lat, lng], { icon: icon }).addTo(this.leaflet.map)
-            if (onClick !== null) {
-                marker.on('click', onClick)
-            }
+            L.marker([lat, lng], { icon: icon }).addTo(this.leaflet.map)
         },
         flyTo(coordinate) {
             let zoom = this.leaflet.map.getMaxZoom()
@@ -282,22 +280,9 @@ export default {
             // todo delete incident
             this.mapPage.showIncidentPopup = false
         },
-        onSelectIncidentFromTable(incident) {            
-            console.log(incident);
-            getCoordinatesFromIncident(incident)
-            .then(coord => {
-                this.addMarker(coord.lat, coord.lng, 'red', () => { this.onSelectIncidentFromMap(incident) })
-            })
-            .catch(err => { 
-                this.onSelectIncidentFromMap(incident) 
-                alert("could not place marker on map")
-            })
-
-        },
-        onSelectIncidentFromMap(incident) {
-            window.scrollTo(0, 0)
-            this.mapPage.selectedIncident = incident
-            this.mapPage.showIncidentPopup = true 
+        onSelectIncident(incident) {
+            // todo show marker on map
+            this.mapPage.showIncidentPopup = true
         },
         onClickSearchIncidents() {
             let incidentCodes = this.mapPage.searchFilter.incidentTypes.flatMap(incident => incident.codes)
@@ -308,7 +293,7 @@ export default {
                 this.incidents = incidents
                 this.formSubmitted = true
             })
-        },
+        }
     },
     mounted() {
         this.leaflet.map = L.map("leafletmap").setView([this.leaflet.center.lat, this.leaflet.center.lng], this.leaflet.zoom);
@@ -353,15 +338,15 @@ export default {
     <!-- Popup Container -->
     <div 
         class="popup-container" 
-        v-if="mapPage.showIncidentPopup && mapPage.selectedIncident !== null" 
+        v-if="mapPage.showIncidentPopup" 
         @click="this.mapPage.showIncidentPopup=false"
     >
         <CrimeMarkerPopup 
-            v-bind:date="this.mapPage.selectedIncident.date_time.split('T')[0]"
-            v-bind:time="this.mapPage.selectedIncident.date_time.split('T')[1]"
-            v-bind:incident="this.mapPage.selectedIncident.incident"
-            v-if="mapPage.showIncidentPopup && mapPage.selectedIncident !== null" 
-            @click:delete="onDeleteIncident(this.mapPage.selectedIncident)"
+            date="12-17-2021"
+            time="12:07pm"
+            incident="Hello World!"
+            v-if="mapPage.showIncidentPopup" 
+            @click:delete="onDeleteIncident(null)"
         />
     </div>
     
@@ -463,10 +448,8 @@ export default {
                 </thead>
                 <tbody>
                     <tr 
-                        class="clickable"
                         v-for="incident in this.incidents" v-bind:id="incident.code"
-                        :style="{ 'background-color': getColorFromCode(incident.code) }"
-                        @click="this.onSelectIncidentFromTable(incident)"                      
+                        :style="{ 'background-color': getColorFromCode(incident.code) }"                       
                     >
                         <td>{{ incident.case_number }}</td>
                         <td>{{ incident.date_time.split('T')[0] }}</td>
@@ -487,7 +470,7 @@ export default {
         <!-- Replace this with your actual form: can be done here or by making a new component -->
         <div class="grid-container">
             <div class="grid-x grid-padding-x align-center">
-                <form @submit.prevent="submitForm">
+                <form @submit.prevent="submitForm" v-if="!formSubmitted">
                     <label for="case_number">Case Number:</label>
                     <input type="text" v-model="caseNumber" id="case_number" />
                     <br />
@@ -512,8 +495,11 @@ export default {
                     <label for="block">Block:</label>
                     <input type="text" v-model="block" id="block" />
                     <br />
-                    <button type="submit">Submit</button>
+                    <button class="button" @click="submitForm">Submit</button>
                 </form>
+                <div v-if="formSubmitted">
+                    <p>Form Submitted</p>
+                </div>
             </div>
         </div>
     </div>
