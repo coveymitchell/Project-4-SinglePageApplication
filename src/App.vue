@@ -141,11 +141,11 @@ export default {
         },
         getColorFromCode(incidentCode){
             if((incidentCode >=200 && incidentCode <=299) || (incidentCode >=400 && incidentCode <=499) || (incidentCode >=800 && incidentCode <=899) ){ //violent crimes
-                return "red";
+                return "lightcoral";
             } else if((incidentCode >=300 && incidentCode <=399) || (incidentCode >=500 && incidentCode <=699) || (incidentCode >=900 && incidentCode <=999) ||(incidentCode >=1400 && incidentCode <=1499)){ //property crimes
-                return "green";
+                return "lightgreen";
             } 
-            return "yellow";
+            return "lightgoldenrodyellow";
             
         },
         getIncidents(incidentCodes=null, neighborhoodCodes=null, limit=null) {
