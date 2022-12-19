@@ -120,8 +120,7 @@ export default {
             incident: '',
             policeGrid: '',
             neighborhoodNumber: '',
-            block: '',
-            errors: {}
+            block: ''
         };
     },
     methods: {
@@ -142,11 +141,11 @@ export default {
         },
         getColorFromCode(incidentCode){
             if((incidentCode >=200 && incidentCode <=299) || (incidentCode >=400 && incidentCode <=499) || (incidentCode >=800 && incidentCode <=899) ){ //violent crimes
-                return "red";
+                return "lightcoral";
             } else if((incidentCode >=300 && incidentCode <=399) || (incidentCode >=500 && incidentCode <=699) || (incidentCode >=900 && incidentCode <=999) ||(incidentCode >=1400 && incidentCode <=1499)){ //property crimes
-                return "green";
+                return "lightgreen";
             } 
-            return "yellow";
+            return "lightgoldenrodyellow";
             
         },
         getIncidents(incidentCodes=null, neighborhoodCodes=null, limit=null) {
@@ -542,7 +541,8 @@ export default {
                 <h3 class="cell small-12 medium-3 large-3" id="abouth"> Mitchell Covey</h3>
                 <img src="images/mitch_pic.jpg" alt="A picture of Mitch" class="cell small-12 medium-8 large-3" id="aboutImg">
                 <p class="cell small-12 medium-12 large-3" id="aboutPara">
-                    Mitchell is from New Richmond, Wisconsin. He enjoys rock climbing, skiing, and gaming. Fun fact, Mitchell 
+                    Mitchell is from New Richmond, Wisconsin. He enjoys rock climbing, skiing, and gaming. Fun fact, Mitchell has road tripped to several national parks
+                    including Yellowstone
                 </p>
             </div>
             <div class="grid-x grid-padding-x">
