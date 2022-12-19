@@ -120,8 +120,7 @@ export default {
             incident: '',
             policeGrid: '',
             neighborhoodNumber: '',
-            block: '',
-            errors: {}
+            block: ''
         };
     },
     methods: {
@@ -523,7 +522,8 @@ export default {
                 <h3 class="cell small-12 medium-3 large-3" id="abouth"> Mitchell Covey</h3>
                 <img src="images/mitch_pic.jpg" alt="A picture of Mitch" class="cell small-12 medium-8 large-3" id="aboutImg">
                 <p class="cell small-12 medium-12 large-3" id="aboutPara">
-                    Mitchell is from New Richmond, Wisconsin. He enjoys rock climbing, skiing, and gaming. Fun fact, Mitchell 
+                    Mitchell is from New Richmond, Wisconsin. He enjoys rock climbing, skiing, and gaming. Fun fact, Mitchell has road tripped to several national parks
+                    including Yellowstone
                 </p>
             </div>
             <div class="grid-x grid-padding-x">
