@@ -11,6 +11,7 @@ import {
     isInBounds,
     clamp, 
     getCoordinatesFromAddress,
+    rangeToList
 } from './map-page.js'
 
 export default {
@@ -66,7 +67,7 @@ export default {
                 },
                 searchFilter: {
                     incidentTypes: [
-                        { isChecked: true, name: "Narcotics", filter: (code) => code >= 1800 && code <= 1885 }
+                        { isChecked: true, name: "Narcotics", codes: rangeToList(1800, 1885) }
                     ],
                     // todo: these should be generated from REST api. 
                     // todo might need to add 'code' attribute to each item
@@ -93,7 +94,7 @@ export default {
                     ],
                     startDate: "2014-08-14",
                     endDate: "2022-11-14",
-                    limit: 100
+                    limit: 1000
                 }
             },
             
@@ -111,13 +112,6 @@ export default {
             errors: {}
         };
     },
-    computed: {
-        filteredIncidents() {
-            return this.incidents.filter(incident => {
-                true
-            })
-        },
-    },
     methods: {
         viewMap(event) {
             this.view = "map";
@@ -134,12 +128,19 @@ export default {
         getNeighborhoods() {
             return this.getJSON('http://localhost:8000/neighborhoods')
         },
-        getIncidents(neighborhoodCode=null, limit=null) {
+        getIncidents(incidentCodes=null, neighborhoodCodes=null, limit=null) {
             let conditions = []
             let query = ''
 
-            if (neighborhoodCode !== null) {
-                conditions.push(`neighborhood=${neighborhoodCode}`)
+            if (incidentCodes !== null && incidentCodes.length > 0) {
+                for (let incidentCode of incidentCodes) {
+                    conditions.push(`code=${incidentCode}`)
+                }
+            }
+            if (neighborhoodCodes !== null && neighborhoodCodes.length > 0) {
+                for (let neighborhoodCode of neighborhoodCodes) {
+                    conditions.push(`neighborhood=${neighborhoodCode}`)
+                }
             }
             if (limit !== null) {
                 conditions.push(`limit=${limit}`)
@@ -241,7 +242,10 @@ export default {
             this.mapPage.showIncidentPopup = true
         },
         onClickSearchIncidents() {
-            this.getIncidents(null, this.mapPage.searchFilter.limit)
+            let incidentCodes = this.mapPage.searchFilter.incidentTypes.flatMap(incident => incident.codes)
+            console.log(incidentCodes);
+            let neighborhoodCodes = null
+            this.getIncidents(null, null, this.mapPage.searchFilter.limit)
             .then(incidents => {
                 this.incidents = incidents
                 this.formSubmitted = true
@@ -277,16 +281,10 @@ export default {
             this.getNeighborhoods(),
         ])
         .then(([codes, neighborhoods]) => {
-            let TEMP_LIMIT = 10 // todo add to model
             this.codes = codes
             this.neighborhoods = neighborhoods
-            return this.getIncidents(neighborhoods[0].code, TEMP_LIMIT)
         })
-        .then(incidents => {
-            this.incidents = incidents
-            console.log(incidents);
-        })
-        .catch(err => console.log("failed to retrieve data from REST server"))
+        .catch(err => console.log("failed to retrieve data from REST server", err))
         
     },
     components: { SearchBar, CrimeMarkerPopup, Legend }
@@ -331,6 +329,8 @@ export default {
                 />
             </div>
 
+
+            
             <!-- Search Filters -->
             <div>
                 <h6>Incident Type</h6>
@@ -404,7 +404,10 @@ export default {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="incident in this.incidents" v-bind:id="incident.code">
+                    <!-- TODO getColorFromCode is undefined -->
+                    <tr 
+                        v-for="incident in this.incidents" v-bind:id="incident.code"
+                    >
                         <td>{{ incident.case_number }}</td>
                         <td>{{ incident.date }}</td>
                         <td>{{ incident.time }}</td>
