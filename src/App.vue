@@ -113,16 +113,15 @@ export default {
             
 
             //Submission form info
-            incident_url: "",
-            case_number: "",
-            date: "",
-            time: "",
-            code: "",
-            incident: "",
-            police_grid: "",
-            neighborhood: "",
-            block: "",
-            formSubmitted: false
+            caseNumber: '',
+            date: '',
+            time: '',
+            code: '',
+            incident: '',
+            policeGrid: '',
+            neighborhoodNumber: '',
+            block: '',
+            errors: {}
         };
     },
     methods: {
@@ -173,7 +172,26 @@ export default {
             return this.getJSON(`http://localhost:8000/incidents${query}`)
         },
         submitForm() {
-            this.formSubmitted = true
+            axios.put('/api/update-incident', {
+                caseNumber: this.caseNumber,
+                date: this.date,
+                time: this.time,
+                code: this.code,
+                incident: this.incident,
+                policeGrid: this.policeGrid,
+                neighborhoodNumber: this.neighborhoodNumber,
+                block: this.block
+            }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         },
 
         getJSON(url) {
@@ -206,6 +224,27 @@ export default {
                     }
                 });
             });
+        },
+        /**
+         * Adds leaflet marker from https://github.com/pointhi/leaflet-color-markers
+         * @param {Number} lat 
+         * @param {Number} lng 
+         * @param {String} color any of the color names listed in the link above
+         * @param {boolean} size either 1 or 2
+         */
+         addMarker(lat, lng, color='blue', large=false) {
+            let size = large ? '-2x' : ''
+            let filename = `marker-icon${size}-${color}.png`
+            let icon = new L.Icon({
+                iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/${filename}`,
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            })
+
+            L.marker([lat, lng], { icon: icon }).addTo(this.leaflet.map)
         },
         flyTo(coordinate) {
             let zoom = this.leaflet.map.getMaxZoom()
@@ -431,68 +470,33 @@ export default {
         <!-- Replace this with your actual form: can be done here or by making a new component -->
         <div class="grid-container">
             <div class="grid-x grid-padding-x align-center">
-                <form @submit.prevent="submitForm" v-if="!formSubmitted">
-                <span>Case Number</span><br>
-                <input 
-                    v-model="case_number"
-                    type="number"
-                    placeholder="Enter the case number" 
-                />
-                <span>Date</span><br>
-                <input 
-                    v-model="date"
-                    type="date"
-                    placeholder="Enter the date of incident" 
-                /><br>
-                <span>Time</span><br>
-                <input 
-                    v-model="time"
-                    type="time"
-                    placeholder="Enter the time of incident"
-                />
-                <span>Code</span><br>
-                <input 
-                    v-model="code"
-                    type="number"
-                    placeholder="Enter the incident code"
-                />
-                <span>Incident</span><br>
-                <input 
-                    v-model="incident"
-                    type="text"
-                    placeholder="Enter Incident Description"
-                />
-                <span>Police Grid</span><br>
-                <input 
-                    v-model="police_grid"
-                    type="number"
-                    placeholder="Enter the Police Grid"
-                />
-                <span>Neighborhood</span><br>
-                <input 
-                    v-model="neighborhood"
-                    type="text"
-                    placeholder="Enter the Neighborhood"
-                />
-                <span>Block</span><br>
-                <input 
-                    v-model="block"
-                    type="text"
-                    placeholder="Enter the Block"
-                />
-                <input type="submit" value="Submit"/>
+                <form @submit.prevent="submitForm">
+                    <label for="case_number">Case Number:</label>
+                    <input type="text" v-model="caseNumber" id="case_number" />
+                    <br />
+                    <label for="date">Date:</label>
+                    <input type="date" v-model="date" id="date" />
+                    <br />
+                    <label for="time">Time:</label>
+                    <input type="time" v-model="time" id="time" />
+                    <br />
+                    <label for="code">Code:</label>
+                    <input type="text" v-model="code" id="code" />
+                    <br />
+                    <label for="incident">Incident:</label>
+                    <input type="text" v-model="incident" id="incident" />
+                    <br />
+                    <label for="police_grid">Police Grid:</label>
+                    <input type="text" v-model="policeGrid" id="police_grid" />
+                    <br />
+                    <label for="neighborhood_number">Neighborhood Number:</label>
+                    <input type="text" v-model="neighborhoodNumber" id="neighborhood_number" />
+                    <br />
+                    <label for="block">Block:</label>
+                    <input type="text" v-model="block" id="block" />
+                    <br />
+                    <button type="submit">Submit</button>
                 </form>
-                <div v-if="formSubmitted">
-                    <h3>Form Submitted</h3>
-                    <p>Case Number: {{ case_number }}</p>
-                    <p>Date: {{ date }}</p>
-                    <p>Time: {{ time }}</p>
-                    <p>Code: {{ code }}</p>
-                    <p>Incident: {{ incident }}</p>
-                    <p>Police Grid: {{ police_grid }}</p>
-                    <p>Neighborhood: {{ neighborhood }}</p>
-                    <p>Block: {{ block }}</p>
-                </div>
             </div>
         </div>
     </div>
@@ -517,13 +521,10 @@ export default {
                 </p>
             </div>
             <div class="grid-x grid-padding-x">
-                <h3 class="cell small-12 medium-3 large-3" id="abouth"> Mitch Covey</h3>
+                <h3 class="cell small-12 medium-3 large-3" id="abouth"> Mitchell Covey</h3>
                 <img src="images/mitch_pic.jpg" alt="A picture of Mitch" class="cell small-12 medium-8 large-3" id="aboutImg">
                 <p class="cell small-12 medium-12 large-3" id="aboutPara">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
-                    in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt 
-                    in culpa qui officia deserunt mollit anim id est laborum. 
+                    Mitchell is from New Richmond, Wisconsin. He enjoys rock climbing, skiing, and gaming. Fun fact, Mitchell 
                 </p>
             </div>
             <div class="grid-x grid-padding-x">
@@ -655,5 +656,8 @@ export default {
     border: solid 1px white;
     text-align: center;
     cursor: pointer;
+}
+.error {
+    color: red;
 }
 </style>
