@@ -549,10 +549,8 @@ export default {
                 <h3 class="cell small-12 medium-3 large-3" id="abouth"> Mike Twohy</h3>
                 <img src="images/mike_pic.jpg" alt="A picture of Mike" class="cell small-12 medium-8 large-3" id="aboutImg">
                 <p class="cell small-12 medium-12 large-3" id="aboutPara">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
-                    in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt 
-                    in culpa qui officia deserunt mollit anim id est laborum. 
+                    Michael is from Roseville, Minnesota. In his free time, he likes to play and write music (both solo and in a band), create apps, and play video games.
+                    A fun fact abou Michael is that he has a pet tortoise, named Borris. 
                 </p>
             </div>
             <hr>
